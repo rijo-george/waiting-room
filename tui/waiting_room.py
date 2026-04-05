@@ -773,7 +773,6 @@ class WaitingRoomApp(App):
         def on_result(theme_name):
             if theme_name and theme_name in THEMES:
                 self._apply_theme(theme_name)
-                self.notify(f"🎨 Theme: {THEMES[theme_name]['name']}")
         self.push_screen(ThemePickerModal(self._theme_name), on_result)
 
     def action_quit(self):
@@ -783,7 +782,7 @@ class WaitingRoomApp(App):
 def main():
     while True:
         app = WaitingRoomApp()
-        result = app.run()
+        app.run()
         if app.return_code != 42:
             break
 
