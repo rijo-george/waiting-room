@@ -46,6 +46,8 @@ def save_config(config):
 THEMES = {
     "dark": {
         "name": "Dark",
+        "screen_bg": "#1c1c2e", "panel_bg": "#1c1c2e",
+        "text_fg": "#ddddee",
         "header_bg": "#1a1a2e", "header_fg": "#e0e0ff",
         "footer_bg": "#1a1a2e", "footer_fg": "#888888",
         "panel_border": "#444444", "panel_active_border": "#7b68ee",
@@ -59,19 +61,23 @@ THEMES = {
     },
     "light": {
         "name": "Light",
-        "header_bg": "#f0f0f5", "header_fg": "#222233",
-        "footer_bg": "#f0f0f5", "footer_fg": "#666666",
+        "screen_bg": "#f0f0f5", "panel_bg": "#f8f8fc",
+        "text_fg": "#222233",
+        "header_bg": "#e8e8f0", "header_fg": "#222233",
+        "footer_bg": "#e8e8f0", "footer_fg": "#666666",
         "panel_border": "#cccccc", "panel_active_border": "#5955cc",
         "left_title_bg": "#e6f9ed", "left_title_fg": "#228855",
         "right_title_bg": "#f9e6f0", "right_title_fg": "#cc3388",
-        "selected_bg": "#e6e6f5", "selected_fg": "#222233",
+        "selected_bg": "#ddddf5", "selected_fg": "#222233",
         "empty_fg": "#999999",
-        "status_bg": "#eaeaef", "status_fg": "#555566", "status_border": "#cccccc",
-        "modal_bg": "#ffffff", "modal_border": "#5955cc",
+        "status_bg": "#e0e0ea", "status_fg": "#555566", "status_border": "#cccccc",
+        "modal_bg": "#f5f5fa", "modal_border": "#5955cc",
         "modal_title": "#5955cc", "modal_label": "#777777",
     },
     "sunset": {
         "name": "Sunset",
+        "screen_bg": "#261a14", "panel_bg": "#261a14",
+        "text_fg": "#eeddc8",
         "header_bg": "#331a14", "header_fg": "#ffccaa",
         "footer_bg": "#331a14", "footer_fg": "#886655",
         "panel_border": "#553322", "panel_active_border": "#ff8833",
@@ -85,6 +91,8 @@ THEMES = {
     },
     "ocean": {
         "name": "Ocean",
+        "screen_bg": "#0f1a2e", "panel_bg": "#0f1a2e",
+        "text_fg": "#bbccdd",
         "header_bg": "#0f1a2e", "header_fg": "#bbddff",
         "footer_bg": "#0f1a2e", "footer_fg": "#667788",
         "panel_border": "#334455", "panel_active_border": "#3399ee",
@@ -98,6 +106,8 @@ THEMES = {
     },
     "forest": {
         "name": "Forest",
+        "screen_bg": "#142314", "panel_bg": "#142314",
+        "text_fg": "#bbccbb",
         "header_bg": "#142314", "header_fg": "#ccddcc",
         "footer_bg": "#142314", "footer_fg": "#668866",
         "panel_border": "#2e442e", "panel_active_border": "#66bb66",
@@ -111,6 +121,8 @@ THEMES = {
     },
     "rose": {
         "name": "Rose",
+        "screen_bg": "#2e1428", "panel_bg": "#2e1428",
+        "text_fg": "#ddbbcc",
         "header_bg": "#2e1428", "header_fg": "#ffccee",
         "footer_bg": "#2e1428", "footer_fg": "#886677",
         "panel_border": "#442244", "panel_active_border": "#dd66aa",
@@ -128,7 +140,8 @@ def build_css(t):
     """Build the full Textual CSS from a theme dict."""
     return f"""
     Screen {{
-        background: $surface;
+        background: {t['screen_bg']};
+        color: {t['text_fg']};
     }}
 
     Header {{
@@ -146,16 +159,22 @@ def build_css(t):
         layout: horizontal;
         height: 1fr;
         padding: 1 2;
+        background: {t['screen_bg']};
     }}
 
     Panel {{
         width: 1fr;
         border: round {t['panel_border']};
         padding: 0 1;
+        background: {t['panel_bg']};
     }}
 
     .panel-active {{
         border: round {t['panel_active_border']};
+    }}
+
+    ScrollableContainer {{
+        background: {t['panel_bg']};
     }}
 
     #panel-title-waiting_for {{
@@ -176,6 +195,8 @@ def build_css(t):
 
     ItemWidget {{
         height: 1;
+        background: {t['panel_bg']};
+        color: {t['text_fg']};
     }}
 
     .selected-item {{
@@ -219,6 +240,15 @@ def build_css(t):
         margin: 2 4;
     }}
 
+    #receipt-text {{
+        color: {t['text_fg']};
+    }}
+
+    DataTable {{
+        background: {t['modal_bg']};
+        color: {t['text_fg']};
+    }}
+
     #modal-title {{
         color: {t['modal_title']};
         text-style: bold;
@@ -227,6 +257,11 @@ def build_css(t):
 
     #modal-buttons {{
         margin-top: 1;
+    }}
+
+    Input {{
+        background: {t['panel_bg']};
+        color: {t['text_fg']};
     }}
 
     AddItemModal Label, NudgeModal Label {{
@@ -638,9 +673,8 @@ class WaitingRoomApp(App):
         config = load_config()
         config["theme"] = theme_name
         save_config(config)
-        self.stylesheet.source = {"inline": build_css(THEMES[theme_name])}
-        self.stylesheet.reparse()
-        self.refresh(layout=True)
+        # Restart the app to apply the new theme cleanly
+        self.exit(return_code=42)
 
     def update_status(self):
         wf = len(self.data["waiting_for"])
@@ -746,5 +780,12 @@ class WaitingRoomApp(App):
         self.exit()
 
 
+def main():
+    while True:
+        app = WaitingRoomApp()
+        result = app.run()
+        if app.return_code != 42:
+            break
+
 if __name__ == "__main__":
-    WaitingRoomApp().run()
+    main()

@@ -1,9 +1,6 @@
 """Allow running with: python -m waiting_room"""
 
-from .app import WaitingRoomApp
-
-def main():
-    WaitingRoomApp().run()
+from .app import main
 
 if __name__ == "__main__":
     main()
