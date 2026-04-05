@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.build/
+*.dmg
+_dmg_staging/
+_dmg_temp.dmg
+AppIcon.iconset/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp

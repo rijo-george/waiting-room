@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Waiting Room — Track every open loop</title>
+  <meta name="description" content="A beautiful dual-panel tracker for everything you're waiting on and everything waiting on you. Native macOS app + terminal TUI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-icon">&#128682;</span>
+        <span>The Waiting Room</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#killer">Magic</a>
+        <a href="#apps">Apps</a>
+        <a href="#themes">Themes</a>
+        <a href="#get-started" class="nav-cta">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Open source &middot; Local-first &middot; Zero cloud</div>
+      <h1>Your follow-ups have<br>a <span class="gradient-text">home</span> now</h1>
+      <p class="hero-sub">
+        Track every open loop in both directions. Who owes you? Who are you blocking?
+        One glance. Two panels. Zero excuses.
+      </p>
+      <div class="hero-actions">
+        <a href="#get-started" class="btn btn-primary">
+          <span>Get Started</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#apps" class="btn btn-ghost">See it in action</a>
+      </div>
+
+      <!-- Hero visual — interactive mockup -->
+      <div class="hero-visual">
+        <div class="mockup">
+          <div class="mockup-bar">
+            <div class="mockup-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="mockup-title">The Waiting Room</span>
+          </div>
+          <div class="mockup-body">
+            <div class="mock-panel mock-left">
+              <div class="mock-panel-header mock-left-header">&#10145; I'M WAITING FOR...</div>
+              <div class="mock-item mock-selected">
+                <span class="mock-dot mock-green"></span>
+                <span><strong>Sherin</strong> &middot; Trip Booking &middot; <span class="mock-age mock-age-green">today</span></span>
+              </div>
+              <div class="mock-item">
+                <span class="mock-dot mock-yellow"></span>
+                <span><strong>AWS</strong> &middot; Support Ticket &middot; <span class="mock-age mock-age-yellow">5d</span></span>
+              </div>
+              <div class="mock-item">
+                <span class="mock-dot mock-red"></span>
+                <span><strong>Priya</strong> &middot; Contract Draft &middot; <span class="mock-age mock-age-red">12d</span> &middot; &#128236;&times;1</span>
+              </div>
+            </div>
+            <div class="mock-panel mock-right">
+              <div class="mock-panel-header mock-right-header">&#11013; WAITING FOR ME...</div>
+              <div class="mock-item">
+                <span class="mock-dot mock-green"></span>
+                <span><strong>Shane</strong> &middot; Design Ideas &middot; <span class="mock-age mock-age-green">today</span></span>
+              </div>
+              <div class="mock-item">
+                <span class="mock-dot mock-yellow"></span>
+                <span><strong>Client</strong> &middot; Proposal &middot; <span class="mock-age mock-age-yellow">4d</span></span>
+              </div>
+            </div>
+          </div>
+          <div class="mockup-status">
+            Waiting on 3 &middot; Blocking 2 &middot; Oldest: 12d &middot; 5 resolved
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-label">Features</div>
+      <h2>Everything falls through the cracks.<br><span class="gradient-text">Until now.</span></h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#8644;</div>
+          <h3>Two-Panel View</h3>
+          <p>Left panel: what you're waiting on. Right panel: what others need from you. Always balanced, always visible.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128308;</div>
+          <h3>Age Indicators</h3>
+          <p>Green, yellow, red. Items age visually so the oldest open loops scream for attention before you forget them.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128236;</div>
+          <h3>Nudge Tracking</h3>
+          <p>Log every follow-up. "Sent reminder email." "Pinged on Slack." Build a paper trail without leaving the app.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#9989;</div>
+          <h3>Resolve & Archive</h3>
+          <p>Done? Resolve it. Every item moves to history with timestamps and duration. See your track record over time.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#127912;</div>
+          <h3>6 Themes</h3>
+          <p>Dark, Light, Sunset, Ocean, Forest, Rose. Pick your vibe. Themes sync between the macOS app and the terminal.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128274;</div>
+          <h3>100% Local</h3>
+          <p>All data lives in <code>~/.waiting-room/</code>. No accounts. No cloud. No tracking. Just a JSON file you own.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Killer Features -->
+  <section class="killer" id="killer">
+    <div class="section-inner">
+      <div class="section-label">Only here</div>
+      <h2>The features you didn't<br>know you <span class="gradient-text">needed</span></h2>
+
+      <div class="killer-grid">
+        <!-- The Receipt -->
+        <div class="killer-card">
+          <div class="killer-visual">
+            <div class="receipt-mock">
+              <div class="receipt-line receipt-header">THE WAITING ROOM</div>
+              <div class="receipt-line receipt-sub">&mdash; RESOLVED &mdash;</div>
+              <div class="receipt-divider"></div>
+              <div class="receipt-row"><span class="receipt-label">WHO:</span> Priya</div>
+              <div class="receipt-row"><span class="receipt-label">WHAT:</span> Contract Draft</div>
+              <div class="receipt-row"><span class="receipt-label">OPENED:</span> Mar 24</div>
+              <div class="receipt-row"><span class="receipt-label">RESOLVED:</span> Apr 5</div>
+              <div class="receipt-divider"></div>
+              <div class="receipt-big">12</div>
+              <div class="receipt-big-label">DAYS</div>
+              <div class="receipt-divider"></div>
+              <div class="receipt-row"><span class="receipt-label">FOLLOW-UPS:</span> 3</div>
+              <div class="receipt-row receipt-nudge">&rarr; sent reminder</div>
+              <div class="receipt-row receipt-nudge">&rarr; pinged on Slack</div>
+              <div class="receipt-row receipt-nudge">&rarr; called directly</div>
+              <div class="receipt-divider"></div>
+              <div class="receipt-footer">THANK YOU FOR YOUR PATIENCE</div>
+            </div>
+          </div>
+          <div class="killer-text">
+            <h3>The Receipt</h3>
+            <p>Every resolved item gets a receipt. Like a shop receipt, but for accountability. How long did it take? How many nudges? Copy it, share it, screenshot it. The paper trail that tells the whole story.</p>
+          </div>
+        </div>
+
+        <!-- Clipboard Radar -->
+        <div class="killer-card killer-card-reverse">
+          <div class="killer-text">
+            <h3>Clipboard Radar</h3>
+            <p>Copy an email that says "I'll send it by Friday" and the app catches it. A banner slides in: <em>"Detected a wait. Add it?"</em> Pre-filled with the who, what, and deadline. One click to track it. Zero typing.</p>
+          </div>
+          <div class="killer-visual">
+            <div class="radar-mock">
+              <div class="radar-source">
+                <div class="radar-source-label">Copied text</div>
+                <div class="radar-source-text">"Hey, I'll get the contract draft back to you by Friday. &mdash; Priya"</div>
+              </div>
+              <div class="radar-arrow">&darr;</div>
+              <div class="radar-banner">
+                <div class="radar-banner-header">
+                  <span class="radar-icon">&#128203;</span>
+                  <span class="radar-title">Clipboard Radar</span>
+                </div>
+                <div class="radar-detected">Detected a possible wait</div>
+                <div class="radar-fields">
+                  <div class="radar-field"><span>Who:</span> Priya</div>
+                  <div class="radar-field"><span>What:</span> contract draft</div>
+                  <div class="radar-field"><span>Due:</span> Friday</div>
+                </div>
+                <div class="radar-actions">
+                  <span class="radar-btn-add">Add Wait</span>
+                  <span class="radar-btn-dismiss">&times;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zen Mode / Screensaver -->
+        <div class="killer-card">
+          <div class="killer-visual">
+            <div class="zen-mock">
+              <div class="zen-time">14:32:07</div>
+              <div class="zen-title">THE WAITING ROOM</div>
+              <div class="zen-columns">
+                <div class="zen-col">
+                  <div class="zen-col-title zen-col-left">WAITING FOR</div>
+                  <div class="zen-row"><span class="zen-dot zen-dot-green"></span>Sherin &middot; Trip <span class="zen-age">0d</span></div>
+                  <div class="zen-row"><span class="zen-dot zen-dot-yellow"></span>AWS &middot; Ticket <span class="zen-age">5d</span></div>
+                  <div class="zen-row"><span class="zen-dot zen-dot-red"></span>Priya &middot; Contract <span class="zen-age">12d</span></div>
+                </div>
+                <div class="zen-divider"></div>
+                <div class="zen-col">
+                  <div class="zen-col-title zen-col-right">WAITING ON ME</div>
+                  <div class="zen-row"><span class="zen-dot zen-dot-green"></span>Shane &middot; Design <span class="zen-age">0d</span></div>
+                  <div class="zen-row"><span class="zen-dot zen-dot-yellow"></span>Client &middot; Proposal <span class="zen-age">4d</span></div>
+                </div>
+              </div>
+              <div class="zen-stats">
+                <span class="zen-pill zen-pill-green">3 outbound</span>
+                <span class="zen-pill zen-pill-pink">2 inbound</span>
+              </div>
+            </div>
+          </div>
+          <div class="killer-text">
+            <h3>Zen Mode</h3>
+            <p>Press <kbd>Z</kbd> and your screen goes dark. A fullscreen ambient display of every open loop — just a clock, two columns, and glowing dots. Walk away from your desk and your screen becomes your accountability board. Can't unsee it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Apps -->
+  <section class="apps" id="apps">
+    <div class="section-inner">
+      <div class="section-label">Two Ways to Use It</div>
+      <h2>Native Mac app.<br><span class="gradient-text">Terminal TUI.</span> Same data.</h2>
+      <p class="section-sub">Both apps read and write the same local JSON file. Switch between them freely. Your data is always in sync.</p>
+
+      <div class="apps-grid">
+        <div class="app-card">
+          <div class="app-badge">macOS</div>
+          <div class="app-preview">
+            <div class="app-mockup-mac">
+              <div class="mac-titlebar">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="mac-body">
+                <div class="mac-row mac-header-row">
+                  <span>&#128682; The Waiting Room</span>
+                  <span class="mac-status">Waiting on 3 &middot; Blocking 2</span>
+                </div>
+                <div class="mac-panels">
+                  <div class="mac-panel mac-panel-left">
+                    <div class="mac-panel-title mac-left-title">&#10145; I'M WAITING FOR... <span class="mac-count">3</span></div>
+                    <div class="mac-row-item mac-row-selected">&#9654; <span class="mock-dot mock-green"></span> Sherin &middot; Trip &middot; today</div>
+                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-yellow"></span> AWS &middot; Ticket &middot; 5d</div>
+                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-red"></span> Priya &middot; Contract &middot; 12d</div>
+                  </div>
+                  <div class="mac-panel mac-panel-right">
+                    <div class="mac-panel-title mac-right-title">&#11013; WAITING FOR ME... <span class="mac-count">2</span></div>
+                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-green"></span> Shane &middot; Design &middot; today</div>
+                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-yellow"></span> Client &middot; Proposal &middot; 4d</div>
+                  </div>
+                </div>
+                <div class="mac-toolbar">
+                  <span class="mac-tool-btn">&#10133; Add [A]</span>
+                  <span class="mac-tool-btn">&#9989; Resolve [R]</span>
+                  <span class="mac-tool-btn">&#128276; Nudge [N]</span>
+                  <span class="mac-tool-btn">&#128337; History [H]</span>
+                  <span class="mac-tool-btn">&#127912; Theme [T]</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>SwiftUI Native App</h3>
+          <p>Full keyboard shortcuts, theme picker, smooth animations. Feels right at home on your Mac.</p>
+          <ul class="app-features">
+            <li>Built with SwiftUI</li>
+            <li>Keyboard-driven (A/R/N/H/T + vim keys)</li>
+            <li>Builds in seconds with SwiftPM</li>
+          </ul>
+        </div>
+
+        <div class="app-card">
+          <div class="app-badge app-badge-tui">Terminal</div>
+          <div class="app-preview">
+            <div class="tui-mockup">
+              <div class="tui-line tui-header">&#128682; The Waiting Room</div>
+              <div class="tui-panels">
+                <div class="tui-panel">
+                  <div class="tui-panel-title tui-left-title">&#10145;  I'M WAITING FOR...</div>
+                  <div class="tui-row tui-row-selected">&#9654; &#128994; Sherin &middot; Trip Booking &middot; today</div>
+                  <div class="tui-row">&nbsp; &#128993; AWS &middot; Support Ticket &middot; 5d</div>
+                  <div class="tui-row">&nbsp; &#128308; Priya &middot; Contract Draft &middot; 12d &middot; &#128236;&times;1</div>
+                </div>
+                <div class="tui-panel">
+                  <div class="tui-panel-title tui-right-title">&#11013;  WAITING FOR ME...</div>
+                  <div class="tui-row">&nbsp; &#128994; Shane &middot; Design Ideas &middot; today</div>
+                  <div class="tui-row">&nbsp; &#128993; Client &middot; Proposal &middot; 4d</div>
+                </div>
+              </div>
+              <div class="tui-status">Waiting on 3 &middot; blocking 2 &middot; oldest: 12d</div>
+              <div class="tui-footer">A Add &middot; R Resolve &middot; N Nudge &middot; H History &middot; T Theme &middot; Q Quit</div>
+            </div>
+          </div>
+          <h3>Textual TUI</h3>
+          <p>For terminal lovers. SSH into a server, open a tmux pane, and check your loops without leaving the command line.</p>
+          <ul class="app-features">
+            <li>Built with Python Textual</li>
+            <li>Works over SSH</li>
+            <li>Same keyboard shortcuts as the Mac app</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Themes -->
+  <section class="themes" id="themes">
+    <div class="section-inner">
+      <div class="section-label">Themes</div>
+      <h2>Pick your <span class="gradient-text">vibe</span></h2>
+      <p class="section-sub">Six carefully crafted themes. Switch with [T] in either app. Your choice syncs across both.</p>
+
+      <div class="themes-grid">
+        <div class="theme-card theme-dark active" data-theme="dark">
+          <div class="theme-preview">
+            <div class="tp-left" style="background:#1a3a2e;border-color:#66ffaa"></div>
+            <div class="tp-right" style="background:#3a1a2e;border-color:#ff88cc"></div>
+          </div>
+          <span class="theme-name">Dark</span>
+        </div>
+        <div class="theme-card theme-light" data-theme="light">
+          <div class="theme-preview" style="background:#f5f5f8">
+            <div class="tp-left" style="background:#e6f9ed;border-color:#228855"></div>
+            <div class="tp-right" style="background:#f9e6f0;border-color:#cc3388"></div>
+          </div>
+          <span class="theme-name">Light</span>
+        </div>
+        <div class="theme-card theme-sunset" data-theme="sunset">
+          <div class="theme-preview" style="background:#261410">
+            <div class="tp-left" style="background:#402e14;border-color:#ffcc44"></div>
+            <div class="tp-right" style="background:#401a1a;border-color:#ff7777"></div>
+          </div>
+          <span class="theme-name">Sunset</span>
+        </div>
+        <div class="theme-card theme-ocean" data-theme="ocean">
+          <div class="theme-preview" style="background:#0d1520">
+            <div class="tp-left" style="background:#142e40;border-color:#55ddee"></div>
+            <div class="tp-right" style="background:#1e2647;border-color:#99bbff"></div>
+          </div>
+          <span class="theme-name">Ocean</span>
+        </div>
+        <div class="theme-card theme-forest" data-theme="forest">
+          <div class="theme-preview" style="background:#0f1a0f">
+            <div class="tp-left" style="background:#1a381a;border-color:#88ee88"></div>
+            <div class="tp-right" style="background:#332e14;border-color:#eedd66"></div>
+          </div>
+          <span class="theme-name">Forest</span>
+        </div>
+        <div class="theme-card theme-rose" data-theme="rose">
+          <div class="theme-preview" style="background:#1a0f1a">
+            <div class="tp-left" style="background:#381a2e;border-color:#ffaadd"></div>
+            <div class="tp-right" style="background:#2e1a3e;border-color:#cc99ff"></div>
+          </div>
+          <span class="theme-name">Rose</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how" id="how">
+    <div class="section-inner">
+      <div class="section-label">How It Works</div>
+      <h2>Stupid simple.<br><span class="gradient-text">By design.</span></h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Add an open loop</h3>
+            <p>Press <kbd>A</kbd>. Type who and what. Optional: expected date and a note. That's it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Watch it age</h3>
+            <p>Green (fresh), yellow (getting old), red (overdue). The color tells you what needs attention before you even read it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Nudge or resolve</h3>
+            <p>Followed up? Press <kbd>N</kbd> to log it. Done? Press <kbd>R</kbd> to resolve. It moves to history with a timestamp.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Get Started -->
+  <section class="cta-section" id="get-started">
+    <div class="section-inner">
+      <div class="cta-card">
+        <h2>Get started in<br><span class="gradient-text">30 seconds</span></h2>
+        <p>No accounts. No install wizards. Just clone and run.</p>
+
+        <div class="install-tabs">
+          <button class="install-tab active" data-tab="mac">macOS App</button>
+          <button class="install-tab" data-tab="tui">Terminal TUI</button>
+        </div>
+
+        <div class="install-content active" id="tab-mac">
+          <div class="code-block">
+            <div class="code-header">
+              <span>Terminal</span>
+              <button class="copy-btn" data-target="code-mac">Copy</button>
+            </div>
+            <pre id="code-mac"><code><span class="code-comment"># Clone the repo</span>
+git clone https://github.com/user/waiting-room.git
+cd waiting-room/macos
+
+<span class="code-comment"># Build and run</span>
+bash build-app.sh
+open "The Waiting Room.app"</code></pre>
+          </div>
+        </div>
+
+        <div class="install-content" id="tab-tui">
+          <div class="code-block">
+            <div class="code-header">
+              <span>Terminal</span>
+              <button class="copy-btn" data-target="code-tui">Copy</button>
+            </div>
+            <pre id="code-tui"><code><span class="code-comment"># Clone the repo</span>
+git clone https://github.com/user/waiting-room.git
+cd waiting-room/tui
+
+<span class="code-comment"># Install dependency</span>
+pip install textual
+
+<span class="code-comment"># Run</span>
+python3 waiting_room.py</code></pre>
+          </div>
+        </div>
+
+        <div class="data-note">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v8m0 2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>All data stored locally at <code>~/.waiting-room/data.json</code>. Both apps share the same file.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Keyboard shortcuts -->
+  <section class="shortcuts">
+    <div class="section-inner">
+      <div class="section-label">Keyboard First</div>
+      <h2>Never touch the mouse</h2>
+      <div class="shortcuts-grid">
+        <div class="shortcut"><kbd>A</kbd><span>Add item</span></div>
+        <div class="shortcut"><kbd>R</kbd><span>Resolve</span></div>
+        <div class="shortcut"><kbd>N</kbd><span>Nudge</span></div>
+        <div class="shortcut"><kbd>H</kbd><span>History</span></div>
+        <div class="shortcut"><kbd>T</kbd><span>Theme</span></div>
+        <div class="shortcut"><kbd>S</kbd><span>Switch panel</span></div>
+        <div class="shortcut"><kbd>J</kbd> / <kbd>K</kbd><span>Navigate</span></div>
+        <div class="shortcut"><kbd>Q</kbd><span>Quit</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="nav-icon">&#128682;</span>
+        <span>The Waiting Room</span>
+      </div>
+      <div class="footer-right">
+        <span>Built with SwiftUI + Textual</span>
+        <span>&middot;</span>
+        <span>100% local, 0% cloud</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
