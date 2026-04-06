@@ -8,9 +8,9 @@ Track every open loop in both directions — who owes you, and who you're blocki
 
 ## Download
 
-**[Download DMG (macOS)](https://github.com/rijo-george/waiting-room/releases/latest)** — Universal binary, signed & notarized. Works on Apple Silicon and Intel.
+**[Download for Mac](https://github.com/rijo-george/waiting-room/releases/latest)** — Universal binary, signed & notarized. Works on Apple Silicon and Intel.
 
-**iOS:** Clone the repo and build with Xcode (see [Building from Source](#building-from-source)).
+**[Get on the App Store (iOS)](https://apps.apple.com/app/the-waiting-room/id0000000000)** — iPhone & iPad.
 
 ## Features
 

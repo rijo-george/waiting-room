@@ -24,7 +24,7 @@
         <a href="#killer">Magic</a>
         <a href="#apps">Apps</a>
         <a href="#themes">Themes</a>
-        <a href="https://github.com/rijo-george/waiting-room/releases/download/v1.0.0/WaitingRoom-1.0.0.dmg" class="nav-cta">Download</a>
+        <a href="#get-started" class="nav-cta">Download</a>
       </div>
     </div>
   </nav>
@@ -40,8 +40,12 @@
         One glance. Two panels. Zero excuses.
       </p>
       <div class="hero-actions">
-        <a href="https://github.com/rijo-george/waiting-room/releases/download/v1.0.0/WaitingRoom-1.0.0.dmg" class="btn btn-primary">
+        <a href="https://github.com/rijo-george/waiting-room/releases/latest" class="btn btn-primary">
           <span>Download for Mac</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://apps.apple.com/app/the-waiting-room/id0000000000" class="btn btn-primary">
+          <span>Get on App Store</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <a href="https://github.com/rijo-george/waiting-room" class="btn btn-ghost">View on GitHub</a>
@@ -428,52 +432,31 @@
   <section class="cta-section" id="get-started">
     <div class="section-inner">
       <div class="cta-card">
-        <h2>Get started in<br><span class="gradient-text">30 seconds</span></h2>
-        <p>No accounts. No install wizards. Just clone and run.</p>
+        <h2>Get it on<br><span class="gradient-text">every device</span></h2>
+        <p>Download the Mac app or grab it from the App Store on iPhone.</p>
 
-        <div class="install-tabs">
-          <button class="install-tab active" data-tab="mac">macOS App</button>
-          <button class="install-tab" data-tab="ios">iOS App</button>
-        </div>
-
-        <div class="install-content active" id="tab-mac">
-          <div class="code-block">
-            <div class="code-header">
-              <span>Terminal</span>
-              <button class="copy-btn" data-target="code-mac">Copy</button>
+        <div class="download-buttons">
+          <a href="https://github.com/rijo-george/waiting-room/releases/latest" class="download-card">
+            <div class="download-icon">&#128187;</div>
+            <div class="download-info">
+              <div class="download-label">Download for</div>
+              <div class="download-platform">macOS</div>
             </div>
-            <pre id="code-mac"><code><span class="code-comment"># Clone the repo</span>
-git clone https://github.com/rijo-george/waiting-room.git
-cd waiting-room/macos
-
-<span class="code-comment"># Build and run</span>
-bash build-app.sh
-open "The Waiting Room.app"</code></pre>
-          </div>
-        </div>
-
-        <div class="install-content" id="tab-ios">
-          <div class="code-block">
-            <div class="code-header">
-              <span>Terminal</span>
-              <button class="copy-btn" data-target="code-ios">Copy</button>
+            <svg class="download-arrow" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="https://apps.apple.com/app/the-waiting-room/id0000000000" class="download-card">
+            <div class="download-icon">&#128241;</div>
+            <div class="download-info">
+              <div class="download-label">Download on the</div>
+              <div class="download-platform">App Store</div>
             </div>
-            <pre id="code-ios"><code><span class="code-comment"># Clone the repo</span>
-git clone https://github.com/rijo-george/waiting-room.git
-cd waiting-room/ios
-
-<span class="code-comment"># Generate Xcode project (requires xcodegen)</span>
-brew install xcodegen
-xcodegen generate
-
-<span class="code-comment"># Open in Xcode and run on device</span>
-open WaitingRoom.xcodeproj</code></pre>
-          </div>
+            <svg class="download-arrow" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
 
         <div class="data-note">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v8m0 2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span>Data syncs via iCloud Drive. Both apps share the same JSON files automatically.</span>
+          <span>Data syncs via iCloud Drive. Both apps share the same files automatically.</span>
         </div>
       </div>
     </div>
