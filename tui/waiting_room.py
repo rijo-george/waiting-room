@@ -12,6 +12,7 @@ from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import ModalScreen
+from textual.theme import Theme
 from textual.widgets import Header, Footer, Label, Static, Button, Input, DataTable
 
 # ── Data ─────────────────────────────────────────────────────────────────────
@@ -42,10 +43,15 @@ def save_config(config):
     CONFIG_FILE.write_text(json.dumps(config, indent=2))
 
 # ── Themes ───────────────────────────────────────────────────────────────────
+# Colors derived from macOS Theme.swift RGB values, converted to hex.
+# Each theme has both Textual Theme API colors AND CSS override colors.
 
 THEMES = {
     "dark": {
-        "name": "Dark",
+        "name": "Dark", "is_dark": True,
+        "primary": "#7a68ed", "secondary": "#66ffaa",
+        "accent": "#7a68ed", "foreground": "#ffffff",
+        "background": "#1c1c2b", "surface": "#212133", "panel": "#19192d",
         "screen_bg": "#1c1c2b", "panel_bg": "#212133",
         "text_fg": "#ffffff",
         "header_bg": "#19192d", "header_fg": "#ffffff",
@@ -60,7 +66,10 @@ THEMES = {
         "modal_title": "#aaaaff", "modal_label": "#878787",
     },
     "light": {
-        "name": "Light",
+        "name": "Light", "is_dark": False,
+        "primary": "#594ccc", "secondary": "#218c54",
+        "accent": "#594ccc", "foreground": "#21212b",
+        "background": "#f4f4f9", "surface": "#ffffff", "panel": "#efeff7",
         "screen_bg": "#f4f4f9", "panel_bg": "#ffffff",
         "text_fg": "#21212b",
         "header_bg": "#efeff7", "header_fg": "#21212b",
@@ -75,7 +84,10 @@ THEMES = {
         "modal_title": "#594ccc", "modal_label": "#7f7f8c",
     },
     "sunset": {
-        "name": "Sunset",
+        "name": "Sunset", "is_dark": True,
+        "primary": "#ff8c33", "secondary": "#ffbf4c",
+        "accent": "#ff8c33", "foreground": "#fff2e5",
+        "background": "#261919", "surface": "#2d1e1e", "panel": "#331914",
         "screen_bg": "#261919", "panel_bg": "#2d1e1e",
         "text_fg": "#fff2e5",
         "header_bg": "#331914", "header_fg": "#fff2e5",
@@ -90,7 +102,10 @@ THEMES = {
         "modal_title": "#ffbf66", "modal_label": "#997f72",
     },
     "ocean": {
-        "name": "Ocean",
+        "name": "Ocean", "is_dark": True,
+        "primary": "#3399e5", "secondary": "#4cd8f2",
+        "accent": "#3399e5", "foreground": "#e5f2ff",
+        "background": "#141e2d", "surface": "#192638", "panel": "#0f192d",
         "screen_bg": "#141e2d", "panel_bg": "#192638",
         "text_fg": "#e5f2ff",
         "header_bg": "#0f192d", "header_fg": "#e5f2ff",
@@ -105,7 +120,10 @@ THEMES = {
         "modal_title": "#66ccff", "modal_label": "#728ca5",
     },
     "forest": {
-        "name": "Forest",
+        "name": "Forest", "is_dark": True,
+        "primary": "#66bf66", "secondary": "#8cf28c",
+        "accent": "#66bf66", "foreground": "#eaf4e5",
+        "background": "#192319", "surface": "#1e2d1e", "panel": "#142314",
         "screen_bg": "#192319", "panel_bg": "#1e2d1e",
         "text_fg": "#eaf4e5",
         "header_bg": "#142314", "header_fg": "#eaf4e5",
@@ -120,7 +138,10 @@ THEMES = {
         "modal_title": "#8ce58c", "modal_label": "#7f937a",
     },
     "rose": {
-        "name": "Rose",
+        "name": "Rose", "is_dark": True,
+        "primary": "#d866a5", "secondary": "#ffa5d8",
+        "accent": "#d866a5", "foreground": "#f4eaf4",
+        "background": "#231923", "surface": "#2d1e2d", "panel": "#281428",
         "screen_bg": "#231923", "panel_bg": "#2d1e2d",
         "text_fg": "#f4eaf4",
         "header_bg": "#281428", "header_fg": "#f4eaf4",
@@ -135,6 +156,20 @@ THEMES = {
         "modal_title": "#ff99d8", "modal_label": "#937a8c",
     },
 }
+
+def make_textual_theme(key, t):
+    """Create a Textual Theme object from our theme dict."""
+    return Theme(
+        name=f"wr-{key}",
+        primary=t["primary"],
+        secondary=t["secondary"],
+        accent=t["accent"],
+        foreground=t["foreground"],
+        background=t["background"],
+        surface=t["surface"],
+        panel=t["panel"],
+        dark=t["is_dark"],
+    )
 
 def build_css(t):
     """Build the full Textual CSS from a theme dict."""
@@ -651,6 +686,9 @@ class WaitingRoomApp(App):
         self.data = load_data()
         self._active_panel = "waiting_for"
         self._theme_name = theme_name
+        # Register all Textual themes
+        for key, t in THEMES.items():
+            self.register_theme(make_textual_theme(key, t))
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -662,7 +700,7 @@ class WaitingRoomApp(App):
         yield Footer()
 
     def on_mount(self):
-        self.dark = self._theme_name != "light"
+        self.theme = f"wr-{self._theme_name}"
         self.update_status()
 
     def _apply_theme(self, theme_name):
