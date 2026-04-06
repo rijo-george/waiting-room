@@ -172,44 +172,45 @@ def make_textual_theme(key, t):
     )
 
 def build_css(t):
-    """Build the full Textual CSS from a theme dict."""
+    """Build Textual CSS. Uses $-variables from the registered Textual Theme
+    for base backgrounds so there's zero conflict, plus explicit hex for
+    custom elements that Textual's theme doesn't control."""
     return f"""
     Screen {{
-        background: {t['screen_bg']};
-        color: {t['text_fg']};
+        background: $background;
+        color: $text;
     }}
 
     Header {{
-        background: {t['header_bg']};
-        color: {t['header_fg']};
+        background: $panel;
+        color: $text;
         text-style: bold;
     }}
 
     Footer {{
-        background: {t['footer_bg']};
-        color: {t['footer_fg']};
+        background: $panel;
     }}
 
     #main-layout {{
         layout: horizontal;
         height: 1fr;
         padding: 1 2;
-        background: {t['screen_bg']};
+        background: $background;
     }}
 
     Panel {{
         width: 1fr;
         border: round {t['panel_border']};
         padding: 0 1;
-        background: {t['panel_bg']};
+        background: $surface;
     }}
 
     .panel-active {{
-        border: round {t['panel_active_border']};
+        border: round $primary;
     }}
 
     ScrollableContainer {{
-        background: {t['panel_bg']};
+        background: $surface;
     }}
 
     #panel-title-waiting_for {{
@@ -230,8 +231,8 @@ def build_css(t):
 
     ItemWidget {{
         height: 1;
-        background: {t['panel_bg']};
-        color: {t['text_fg']};
+        background: $surface;
+        color: $text;
     }}
 
     .selected-item {{
@@ -241,7 +242,7 @@ def build_css(t):
     }}
 
     .empty-label {{
-        color: {t['empty_fg']};
+        color: $text-muted;
         padding: 1 0;
     }}
 
@@ -253,15 +254,15 @@ def build_css(t):
     }}
 
     #status-text {{
-        color: {t['status_fg']};
+        color: $text-muted;
         padding: 1 0;
     }}
 
     #modal-box {{
         width: 60;
         height: auto;
-        border: round {t['modal_border']};
-        background: {t['modal_bg']};
+        border: round $primary;
+        background: $panel;
         padding: 2 3;
         margin: 4 10;
     }}
@@ -269,19 +270,19 @@ def build_css(t):
     #history-box {{
         width: 90;
         height: 35;
-        border: round {t['modal_border']};
-        background: {t['modal_bg']};
+        border: round $primary;
+        background: $panel;
         padding: 2 3;
         margin: 2 4;
     }}
 
     #receipt-text {{
-        color: {t['text_fg']};
+        color: $text;
     }}
 
     DataTable {{
-        background: {t['modal_bg']};
-        color: {t['text_fg']};
+        background: $panel;
+        color: $text;
     }}
 
     #modal-title {{
@@ -295,12 +296,12 @@ def build_css(t):
     }}
 
     Input {{
-        background: {t['panel_bg']};
-        color: {t['text_fg']};
+        background: $surface;
+        color: $text;
     }}
 
     AddItemModal Label, NudgeModal Label {{
-        color: {t['modal_label']};
+        color: $text-muted;
         margin-top: 1;
     }}
 
@@ -686,9 +687,10 @@ class WaitingRoomApp(App):
         self.data = load_data()
         self._active_panel = "waiting_for"
         self._theme_name = theme_name
-        # Register all Textual themes
+        # Register and apply theme BEFORE first render
         for key, t in THEMES.items():
             self.register_theme(make_textual_theme(key, t))
+        self.theme = f"wr-{self._theme_name}"
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -700,7 +702,6 @@ class WaitingRoomApp(App):
         yield Footer()
 
     def on_mount(self):
-        self.theme = f"wr-{self._theme_name}"
         self.update_status()
 
     def _apply_theme(self, theme_name):
