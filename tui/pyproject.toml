@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "waiting-room"
-version = "1.0.4"
+version = "1.0.5"
 description = "Track every open loop in both directions — who owes you, and who you're blocking."
 readme = "README.md"
 license = "MIT"
@@ -23,7 +23,7 @@ classifiers = [
     "Topic :: Office/Business",
 ]
 dependencies = [
-    "textual>=0.40",
+    "textual>=8.0,<9",
 ]
 
 [project.scripts]
