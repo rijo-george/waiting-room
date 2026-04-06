@@ -2,7 +2,7 @@
 
 **Your follow-ups have a home now.**
 
-Track every open loop in both directions — who owes you, and who you're blocking. Native macOS app + terminal TUI, sharing the same local data.
+Track every open loop in both directions — who owes you, and who you're blocking. Native macOS + iOS apps, sharing the same data via iCloud.
 
 ![WR](macos/AppIcon.png)
 
@@ -10,11 +10,7 @@ Track every open loop in both directions — who owes you, and who you're blocki
 
 **[Download DMG (macOS)](https://github.com/rijo-george/waiting-room/releases/latest)** — Universal binary, signed & notarized. Works on Apple Silicon and Intel.
 
-**Terminal TUI:**
-```bash
-pip install textual
-python3 tui/waiting_room.py
-```
+**iOS:** Clone the repo and build with Xcode (see [Building from Source](#building-from-source)).
 
 ## Features
 
@@ -22,9 +18,9 @@ python3 tui/waiting_room.py
 - **Age indicators** — Green (fresh), yellow (getting old), red (overdue). At a glance.
 - **Nudge tracking** — Log every follow-up with timestamps.
 - **Resolve & archive** — Done items move to history with duration tracking.
-- **6 themes** — Dark, Light, Sunset, Ocean, Forest, Rose. Synced between apps.
-- **100% local** — Data lives in `~/.waiting-room/`. No accounts, no cloud, no tracking.
-- **iCloud sync** — Automatically syncs across Macs via iCloud Drive.
+- **6 themes** — Dark, Light, Sunset, Ocean, Forest, Rose. Synced across devices.
+- **iCloud sync** — Automatically syncs across Macs and iPhones via iCloud Drive.
+- **100% yours** — No accounts, no tracking. Data lives locally and syncs through your own iCloud.
 
 ## Killer Features
 
@@ -34,10 +30,20 @@ Every resolved item gets a receipt — like a shop receipt for accountability. W
 ### Clipboard Radar
 Copy an email that says "I'll send it by Friday" — the app detects it and offers to create a wait item, pre-filled. Zero typing.
 
-### Zen Mode
-Press `Z` for a fullscreen ambient display of all your open loops. Your screen becomes your accountability board.
+## Apps
 
-## Keyboard Shortcuts
+### macOS
+- Built with SwiftUI
+- Full keyboard shortcuts (A/R/N/H/T + vim keys)
+- Clipboard Radar with NLP name extraction
+
+### iOS
+- Built with SwiftUI for iPhone & iPad
+- Side-by-side panels on iPad, segmented control on iPhone
+- Swipe to resolve, swipe to nudge
+- Haptic feedback, native share sheet for receipts
+
+## Keyboard Shortcuts (macOS)
 
 | Key | Action |
 |-----|--------|
@@ -46,22 +52,20 @@ Press `Z` for a fullscreen ambient display of all your open loops. Your screen b
 | `N` | Nudge |
 | `H` | History |
 | `T` | Theme picker |
-| `Z` | Zen mode |
 | `S` / `Tab` | Switch panel |
 | `J` / `K` | Navigate up/down |
-| `Q` | Quit (TUI) |
 
 ## Data Storage
 
-Both apps read/write the same files:
+Both apps read/write the same files via iCloud Drive:
 
 ```
-~/.waiting-room/
+~/Library/Mobile Documents/com~apple~CloudDocs/WaitingRoom/
 ├── data.json      ← items, history, nudges
 └── config.json    ← theme preference
 ```
 
-With iCloud Drive enabled, data syncs to `~/Library/Mobile Documents/com~apple~CloudDocs/WaitingRoom/` and a symlink keeps the TUI compatible.
+If iCloud Drive is not available, data falls back to `~/.waiting-room/` on Mac or the app's Documents directory on iOS.
 
 ## Building from Source
 
@@ -73,12 +77,14 @@ bash build-dmg.sh        # Build + sign + notarize DMG
 ```
 Requires Swift 5.9+ and macOS 14+.
 
-**TUI:**
+**iOS app:**
 ```bash
-pip install textual
-python3 tui/waiting_room.py
+cd ios
+brew install xcodegen    # One-time setup
+xcodegen generate        # Generate Xcode project
+open WaitingRoom.xcodeproj
 ```
-Requires Python 3.10+.
+Set your development team in Xcode, then build and run. Requires Xcode 16+ and iOS 17+.
 
 ## License
 

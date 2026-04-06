@@ -383,33 +383,43 @@ code {
 }
 .radar-btn-dismiss { font-size: 1rem; color: var(--text-2); cursor: pointer; }
 
-/* Zen mockup */
-.zen-mock {
-  background: #08070e;
-  border: 1px solid #222;
+/* Sync mockup */
+.sync-mock {
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 24px 28px;
+  padding: 32px 24px;
   text-align: center;
-  font-family: 'JetBrains Mono', monospace;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  max-width: 340px;
+  margin: 0 auto;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
 }
-.zen-time { font-size: 2.2rem; font-weight: 100; color: rgba(255,255,255,0.12); margin-bottom: 12px; }
-.zen-title { font-size: 0.55rem; font-weight: 700; letter-spacing: 4px; color: rgba(255,255,255,0.15); margin-bottom: 20px; }
-.zen-columns { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; text-align: left; }
-.zen-divider { width: 1px; background: rgba(255,255,255,0.06); }
-.zen-col-title { font-size: 0.5rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 8px; }
-.zen-col-left { color: rgba(90, 220, 140, 0.4); }
-.zen-col-right { color: rgba(220, 115, 180, 0.4); }
-.zen-row { font-size: 0.65rem; color: rgba(255,255,255,0.4); padding: 2px 0; display: flex; align-items: center; gap: 6px; }
-.zen-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-.zen-dot-green { background: rgba(90, 220, 140, 0.6); }
-.zen-dot-yellow { background: rgba(220, 180, 60, 0.6); }
-.zen-dot-red { background: rgba(220, 80, 80, 0.6); }
-.zen-age { margin-left: auto; font-weight: 600; font-size: 0.6rem; }
-.zen-stats { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
-.zen-pill { font-size: 0.55rem; padding: 3px 10px; border-radius: 100px; font-weight: 600; }
-.zen-pill-green { color: rgba(90, 220, 140, 0.4); background: rgba(90, 220, 140, 0.06); border: 1px solid rgba(90, 220, 140, 0.1); }
-.zen-pill-pink { color: rgba(220, 115, 180, 0.4); background: rgba(220, 115, 180, 0.06); border: 1px solid rgba(220, 115, 180, 0.1); }
+.sync-devices {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin-bottom: 20px;
+}
+.sync-device { text-align: center; }
+.sync-device-icon { font-size: 2.5rem; margin-bottom: 4px; }
+.sync-device-label { font-size: 0.75rem; font-weight: 600; color: var(--text-2); }
+.sync-arrows {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.sync-arrow { font-size: 1.2rem; color: var(--accent); }
+.sync-cloud { font-size: 1.6rem; color: var(--accent); }
+.sync-status {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 0.8rem; font-weight: 600; color: var(--green);
+  background: var(--green-bg); padding: 8px 16px; border-radius: 100px;
+  border: 1px solid rgba(45, 138, 78, 0.15);
+}
+.sync-dot-live {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 
 @media (max-width: 900px) {
   .killer-card, .killer-card-reverse { grid-template-columns: 1fr; direction: ltr; }
@@ -480,7 +490,7 @@ code {
   padding: 4px 12px; border-radius: 100px;
   background: var(--accent); color: #fff;
 }
-.app-badge-tui { background: var(--green); color: #fff; }
+.app-badge-ios { background: #007AFF; color: #fff; }
 
 .app-preview {
   margin-bottom: 24px;
@@ -565,49 +575,73 @@ code {
   border-radius: 3px;
 }
 
-/* TUI mockup — dark */
-.tui-mockup {
+/* iOS mockup — dark */
+.ios-mockup {
   background: var(--mock-bg);
   border: 1px solid var(--mock-border);
-  border-radius: var(--radius);
+  border-radius: 20px;
   overflow: hidden;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
+  max-width: 280px;
+  margin: 0 auto;
 }
 
-.tui-header {
-  background: var(--mock-surface); color: #d0cee0;
-  padding: 6px 12px; font-weight: 600;
-  border-bottom: 1px solid var(--mock-border);
+.ios-notch {
+  width: 90px; height: 6px; background: #000;
+  border-radius: 0 0 10px 10px;
+  margin: 0 auto;
 }
 
-.tui-panels {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
-  padding: 6px;
+.ios-body { padding: 0; }
+
+.ios-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 12px; background: #1a1924;
+  color: var(--mock-text); font-weight: 600; font-size: 0.65rem;
+}
+.ios-status-text { color: var(--mock-text-2); font-size: 0.55rem; }
+
+.ios-tabs {
+  display: flex; gap: 2px; padding: 4px 8px;
+  background: var(--mock-surface);
+}
+.ios-tab {
+  flex: 1; text-align: center; padding: 5px 6px;
+  border-radius: 6px; font-size: 0.58rem; font-weight: 500;
+  color: var(--mock-text-2);
+}
+.ios-tab-active {
+  background: rgba(94, 196, 122, 0.08);
+  color: var(--mock-panel-left-fg);
+  font-weight: 600;
 }
 
-.tui-panel {
-  border: 1px solid #444; border-radius: 6px; overflow: hidden;
+.ios-panel {
+  margin: 6px 8px;
+  border: 1px solid var(--mock-border);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.tui-panel-title {
-  font-weight: 600; padding: 4px 8px; font-size: 0.62rem;
+.ios-panel-title {
+  font-weight: 600; padding: 4px 8px; font-size: 0.6rem;
+  display: flex; justify-content: space-between; align-items: center;
 }
-.tui-left-title { background: var(--mock-panel-left-bg); color: var(--mock-panel-left-fg); }
-.tui-right-title { background: var(--mock-panel-right-bg); color: var(--mock-panel-right-fg); }
+.ios-left-title { background: var(--mock-panel-left-bg); color: var(--mock-panel-left-fg); }
 
-.tui-row { padding: 2px 8px; color: var(--mock-text); }
-.tui-row-selected { background: var(--mock-selected); font-weight: 600; }
-
-.tui-status {
-  padding: 5px 12px; color: var(--mock-text-2); font-size: 0.6rem;
-  background: #15141c; border-top: 1px solid #333;
+.ios-row {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 8px; color: var(--mock-text); font-size: 0.6rem;
 }
+.ios-row-selected { background: var(--mock-selected); font-weight: 600; }
 
-.tui-footer {
-  padding: 4px 12px; font-size: 0.58rem;
-  color: #555; background: var(--mock-surface);
-  border-top: 1px solid var(--mock-border);
+.ios-toolbar {
+  display: flex; justify-content: space-around; padding: 8px 6px;
+  background: #13121a; border-top: 1px solid var(--mock-border);
+}
+.ios-tool-btn {
+  font-size: 0.5rem; color: var(--mock-text-2); text-align: center;
 }
 
 /* ── Themes ──────────────────────────────────────────────────────── */

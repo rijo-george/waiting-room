@@ -1,0 +1,356 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1357EB4F0F58106D34C1F95C /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F421670E0C35FD7EA47E145 /* Store.swift */; };
+		139599F1B751DEFBB0C0D64E /* ClipboardRadar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C290C3AFCB691CBE08AD1D /* ClipboardRadar.swift */; };
+		30864D5A217D62C2146B0B9B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3470843F4A8F123DDB76AE45 /* Models.swift */; };
+		37E1471EE0DDCA659EBA31C9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA8449793E63F11C665F9A4 /* Theme.swift */; };
+		409CF0EF4228327A4F3B59BA /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2818B9BD3097B18EEE437967 /* ThemePickerView.swift */; };
+		6346C849687E0061F8BE7055 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA07AF8A8F17E6A4D1C38CA /* HistoryView.swift */; };
+		7B1C07486F195B0398C95FBE /* WaitingRoomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393F5CD7EF9003532ABAC66 /* WaitingRoomApp.swift */; };
+		7D05BF8DA7F85A6373407FE2 /* AddItemSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B701221B7F763F9933DE70 /* AddItemSheet.swift */; };
+		920EF2842751AD98A74E5159 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2454427656A6B360AE5831A0 /* PanelView.swift */; };
+		A472C309AB2D7B3FF3B03663 /* ReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489845F179F38E1A2EFCCD7F /* ReceiptView.swift */; };
+		A8B32A26C2956B4398F1E740 /* NudgeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2719816D525E851627B2BE4D /* NudgeSheet.swift */; };
+		AC1ACAD89A36E7D744CC137B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB1104D7C4809CC6AB3E497 /* ContentView.swift */; };
+		DCF554B7C6BE0D2BFAB57EA0 /* ConfirmSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE165D30C279FED6289B4135 /* ConfirmSheet.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2454427656A6B360AE5831A0 /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
+		2719816D525E851627B2BE4D /* NudgeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NudgeSheet.swift; sourceTree = "<group>"; };
+		2818B9BD3097B18EEE437967 /* ThemePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
+		3470843F4A8F123DDB76AE45 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		489845F179F38E1A2EFCCD7F /* ReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptView.swift; sourceTree = "<group>"; };
+		5B0B36BD59D589E1FA6358C0 /* WaitingRoom.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = WaitingRoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F421670E0C35FD7EA47E145 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		5FA8449793E63F11C665F9A4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		73C290C3AFCB691CBE08AD1D /* ClipboardRadar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardRadar.swift; sourceTree = "<group>"; };
+		C7C2BF387DFF782745AE5964 /* WaitingRoom.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WaitingRoom.entitlements; sourceTree = "<group>"; };
+		CFA07AF8A8F17E6A4D1C38CA /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		E393F5CD7EF9003532ABAC66 /* WaitingRoomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomApp.swift; sourceTree = "<group>"; };
+		E6B701221B7F763F9933DE70 /* AddItemSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemSheet.swift; sourceTree = "<group>"; };
+		ECB1104D7C4809CC6AB3E497 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EE165D30C279FED6289B4135 /* ConfirmSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSheet.swift; sourceTree = "<group>"; };
+		F993CA4B75BD63530ADEEC54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		045B17ABC1EF18E72F93156C = {
+			isa = PBXGroup;
+			children = (
+				2EBC9B1FD5716829E172BF7C /* WaitingRoom */,
+				F292E636E7EC394D7C89BCB2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2EBC9B1FD5716829E172BF7C /* WaitingRoom */ = {
+			isa = PBXGroup;
+			children = (
+				E6B701221B7F763F9933DE70 /* AddItemSheet.swift */,
+				73C290C3AFCB691CBE08AD1D /* ClipboardRadar.swift */,
+				EE165D30C279FED6289B4135 /* ConfirmSheet.swift */,
+				ECB1104D7C4809CC6AB3E497 /* ContentView.swift */,
+				CFA07AF8A8F17E6A4D1C38CA /* HistoryView.swift */,
+				F993CA4B75BD63530ADEEC54 /* Info.plist */,
+				3470843F4A8F123DDB76AE45 /* Models.swift */,
+				2719816D525E851627B2BE4D /* NudgeSheet.swift */,
+				2454427656A6B360AE5831A0 /* PanelView.swift */,
+				489845F179F38E1A2EFCCD7F /* ReceiptView.swift */,
+				5F421670E0C35FD7EA47E145 /* Store.swift */,
+				5FA8449793E63F11C665F9A4 /* Theme.swift */,
+				2818B9BD3097B18EEE437967 /* ThemePickerView.swift */,
+				C7C2BF387DFF782745AE5964 /* WaitingRoom.entitlements */,
+				E393F5CD7EF9003532ABAC66 /* WaitingRoomApp.swift */,
+			);
+			path = WaitingRoom;
+			sourceTree = "<group>";
+		};
+		F292E636E7EC394D7C89BCB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5B0B36BD59D589E1FA6358C0 /* WaitingRoom.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C5438AE573328D1BC492B242 /* WaitingRoom */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0C43D227B8E4981BCBCC5F7 /* Build configuration list for PBXNativeTarget "WaitingRoom" */;
+			buildPhases = (
+				843EC93AFF1E75BE65678C66 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WaitingRoom;
+			packageProductDependencies = (
+			);
+			productName = WaitingRoom;
+			productReference = 5B0B36BD59D589E1FA6358C0 /* WaitingRoom.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		17C7AE6C86F73E5B559F6190 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					C5438AE573328D1BC492B242 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 02DFE4DAC1B7E6EE073E0CC0 /* Build configuration list for PBXProject "WaitingRoom" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 045B17ABC1EF18E72F93156C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F292E636E7EC394D7C89BCB2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C5438AE573328D1BC492B242 /* WaitingRoom */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		843EC93AFF1E75BE65678C66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D05BF8DA7F85A6373407FE2 /* AddItemSheet.swift in Sources */,
+				139599F1B751DEFBB0C0D64E /* ClipboardRadar.swift in Sources */,
+				DCF554B7C6BE0D2BFAB57EA0 /* ConfirmSheet.swift in Sources */,
+				AC1ACAD89A36E7D744CC137B /* ContentView.swift in Sources */,
+				6346C849687E0061F8BE7055 /* HistoryView.swift in Sources */,
+				30864D5A217D62C2146B0B9B /* Models.swift in Sources */,
+				A8B32A26C2956B4398F1E740 /* NudgeSheet.swift in Sources */,
+				920EF2842751AD98A74E5159 /* PanelView.swift in Sources */,
+				A472C309AB2D7B3FF3B03663 /* ReceiptView.swift in Sources */,
+				1357EB4F0F58106D34C1F95C /* Store.swift in Sources */,
+				37E1471EE0DDCA659EBA31C9 /* Theme.swift in Sources */,
+				409CF0EF4228327A4F3B59BA /* ThemePickerView.swift in Sources */,
+				7B1C07486F195B0398C95FBE /* WaitingRoomApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6FD26E621014FAB2FEEA8928 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaitingRoom/WaitingRoom.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = WaitingRoom/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_NAME = "The Waiting Room";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BB1279F818329B28D56BD111 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = WaitingRoom/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.waitingroom.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E64616A7950D101B13787959 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaitingRoom/WaitingRoom.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = WaitingRoom/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_NAME = "The Waiting Room";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F90C10CEC6F98D755FDD2877 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = WaitingRoom/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.waitingroom.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02DFE4DAC1B7E6EE073E0CC0 /* Build configuration list for PBXProject "WaitingRoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F90C10CEC6F98D755FDD2877 /* Debug */,
+				BB1279F818329B28D56BD111 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E0C43D227B8E4981BCBCC5F7 /* Build configuration list for PBXNativeTarget "WaitingRoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E64616A7950D101B13787959 /* Debug */,
+				6FD26E621014FAB2FEEA8928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 17C7AE6C86F73E5B559F6190 /* Project object */;
+}

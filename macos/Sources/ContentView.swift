@@ -9,7 +9,7 @@ struct ContentView: View {
     @State private var showingHistory = false
     @State private var showingNudge = false
     @State private var showingThemePicker = false
-    @State private var showingScreensaver = false
+
     @State private var itemToResolve: WaitingItem?
     @State private var resolvedItemForReceipt: WaitingItem?
     @State private var nudgeItem: WaitingItem?
@@ -90,7 +90,7 @@ struct ContentView: View {
                 toolbarButton("Nudge", icon: "bell.circle.fill", key: "N") { promptNudge() }
                 toolbarButton("History", icon: "clock.circle.fill", key: "H") { showingHistory = true }
                 toolbarButton("Theme", icon: "paintpalette.fill", key: "T") { showingThemePicker = true }
-                toolbarButton("Zen", icon: "sparkles.tv.fill", key: "Z") { showingScreensaver = true }
+
                 Spacer()
                 toolbarButton("Switch", icon: "arrow.left.arrow.right", key: "Tab") { switchPanel() }
             }
@@ -105,7 +105,7 @@ struct ContentView: View {
         .onKeyPress(characters: CharacterSet(charactersIn: "nN")) { _ in promptNudge(); return .handled }
         .onKeyPress(characters: CharacterSet(charactersIn: "hH")) { _ in showingHistory = true; return .handled }
         .onKeyPress(characters: CharacterSet(charactersIn: "tT")) { _ in showingThemePicker = true; return .handled }
-        .onKeyPress(characters: CharacterSet(charactersIn: "zZ")) { _ in showingScreensaver = true; return .handled }
+
         .onKeyPress(.upArrow) { moveCursor(-1); return .handled }
         .onKeyPress(.downArrow) { moveCursor(1); return .handled }
         .onKeyPress(.leftArrow) { activePanel = .waitingFor; return .handled }
@@ -165,11 +165,7 @@ struct ContentView: View {
         .sheet(item: $resolvedItemForReceipt) { item in
             ReceiptView(item: item, direction: resolvedDirection)
         }
-        .onChange(of: showingScreensaver) {
-            if showingScreensaver {
-                openScreensaverWindow()
-            }
-        }
+
         .onAppear {
             store.load()
             autoSelectFirst()
@@ -219,33 +215,6 @@ struct ContentView: View {
     private func promptNudge() {
         guard let item = selectedItem else { return }
         nudgeItem = item
-    }
-
-    private func openScreensaverWindow() {
-        guard let screen = NSScreen.main else { return }
-        let window = NSWindow(
-            contentRect: screen.frame,
-            styleMask: [.borderless],
-            backing: .buffered,
-            defer: false
-        )
-        window.level = .screenSaver
-        window.isOpaque = true
-        window.backgroundColor = .black
-        window.collectionBehavior = [.fullScreenPrimary, .canJoinAllSpaces]
-
-        let hostView = NSHostingView(
-            rootView: ScreensaverMode()
-                .environmentObject(store)
-                .onDisappear {
-                    window.close()
-                    showingScreensaver = false
-                }
-        )
-        window.contentView = hostView
-        window.makeKeyAndOrderFront(nil)
-        window.toggleFullScreen(nil)
-        showingScreensaver = false
     }
 
     // MARK: - Status

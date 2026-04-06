@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Waiting Room — Track every open loop</title>
-  <meta name="description" content="A beautiful dual-panel tracker for everything you're waiting on and everything waiting on you. Native macOS app + terminal TUI.">
+  <meta name="description" content="A beautiful dual-panel tracker for everything you're waiting on and everything waiting on you. Native macOS + iOS apps with iCloud sync.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -33,7 +33,7 @@
   <section class="hero">
     <div class="hero-glow"></div>
     <div class="hero-content">
-      <div class="hero-badge">Open source &middot; Local-first &middot; Zero cloud</div>
+      <div class="hero-badge">Open source &middot; Local-first &middot; iCloud sync</div>
       <h1>Your follow-ups have<br>a <span class="gradient-text">home</span> now</h1>
       <p class="hero-sub">
         Track every open loop in both directions. Who owes you? Who are you blocking?
@@ -123,12 +123,12 @@
         <div class="feature-card">
           <div class="feature-icon">&#127912;</div>
           <h3>6 Themes</h3>
-          <p>Dark, Light, Sunset, Ocean, Forest, Rose. Pick your vibe. Themes sync between the macOS app and the terminal.</p>
+          <p>Dark, Light, Sunset, Ocean, Forest, Rose. Pick your vibe. Themes sync across all your devices via iCloud.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">&#128274;</div>
           <h3>100% Local</h3>
-          <p>All data lives in <code>~/.waiting-room/</code>. No accounts. No cloud. No tracking. Just a JSON file you own.</p>
+          <p>All data lives locally on your device. No accounts. No tracking. Optional iCloud sync keeps your Macs and iPhones in perfect harmony.</p>
         </div>
       </div>
     </div>
@@ -203,35 +203,34 @@
           </div>
         </div>
 
-        <!-- Zen Mode / Screensaver -->
+        <!-- iCloud Sync -->
         <div class="killer-card">
           <div class="killer-visual">
-            <div class="zen-mock">
-              <div class="zen-time">14:32:07</div>
-              <div class="zen-title">THE WAITING ROOM</div>
-              <div class="zen-columns">
-                <div class="zen-col">
-                  <div class="zen-col-title zen-col-left">WAITING FOR</div>
-                  <div class="zen-row"><span class="zen-dot zen-dot-green"></span>Sherin &middot; Trip <span class="zen-age">0d</span></div>
-                  <div class="zen-row"><span class="zen-dot zen-dot-yellow"></span>AWS &middot; Ticket <span class="zen-age">5d</span></div>
-                  <div class="zen-row"><span class="zen-dot zen-dot-red"></span>Priya &middot; Contract <span class="zen-age">12d</span></div>
+            <div class="sync-mock">
+              <div class="sync-devices">
+                <div class="sync-device sync-mac">
+                  <div class="sync-device-icon">&#128187;</div>
+                  <div class="sync-device-label">Mac</div>
                 </div>
-                <div class="zen-divider"></div>
-                <div class="zen-col">
-                  <div class="zen-col-title zen-col-right">WAITING ON ME</div>
-                  <div class="zen-row"><span class="zen-dot zen-dot-green"></span>Shane &middot; Design <span class="zen-age">0d</span></div>
-                  <div class="zen-row"><span class="zen-dot zen-dot-yellow"></span>Client &middot; Proposal <span class="zen-age">4d</span></div>
+                <div class="sync-arrows">
+                  <span class="sync-arrow">&harr;</span>
+                  <div class="sync-cloud">&#9729;</div>
+                  <span class="sync-arrow">&harr;</span>
+                </div>
+                <div class="sync-device sync-phone">
+                  <div class="sync-device-icon">&#128241;</div>
+                  <div class="sync-device-label">iPhone</div>
                 </div>
               </div>
-              <div class="zen-stats">
-                <span class="zen-pill zen-pill-green">3 outbound</span>
-                <span class="zen-pill zen-pill-pink">2 inbound</span>
+              <div class="sync-status">
+                <span class="sync-dot-live"></span>
+                Synced via iCloud
               </div>
             </div>
           </div>
           <div class="killer-text">
-            <h3>Zen Mode</h3>
-            <p>Press <kbd>Z</kbd> and your screen goes dark. A fullscreen ambient display of every open loop — just a clock, two columns, and glowing dots. Walk away from your desk and your screen becomes your accountability board. Can't unsee it.</p>
+            <h3>iCloud Sync</h3>
+            <p>Add an item on your Mac, see it on your iPhone. Resolve it on the go, and it's done everywhere. Your data flows through iCloud Drive automatically — no setup, no accounts, no thinking about it.</p>
           </div>
         </div>
       </div>
@@ -242,8 +241,8 @@
   <section class="apps" id="apps">
     <div class="section-inner">
       <div class="section-label">Two Ways to Use It</div>
-      <h2>Native Mac app.<br><span class="gradient-text">Terminal TUI.</span> Same data.</h2>
-      <p class="section-sub">Both apps read and write the same local JSON file. Switch between them freely. Your data is always in sync.</p>
+      <h2>Mac app. <span class="gradient-text">iOS app.</span><br>Same data.</h2>
+      <p class="section-sub">Both apps sync via iCloud Drive. Add on your Mac, resolve on your iPhone. Your data is always up to date.</p>
 
       <div class="apps-grid">
         <div class="app-card">
@@ -293,33 +292,47 @@
         </div>
 
         <div class="app-card">
-          <div class="app-badge app-badge-tui">Terminal</div>
+          <div class="app-badge app-badge-ios">iOS</div>
           <div class="app-preview">
-            <div class="tui-mockup">
-              <div class="tui-line tui-header">&#128682; The Waiting Room</div>
-              <div class="tui-panels">
-                <div class="tui-panel">
-                  <div class="tui-panel-title tui-left-title">&#10145;  I'M WAITING FOR...</div>
-                  <div class="tui-row tui-row-selected">&#9654; &#128994; Sherin &middot; Trip Booking &middot; today</div>
-                  <div class="tui-row">&nbsp; &#128993; AWS &middot; Support Ticket &middot; 5d</div>
-                  <div class="tui-row">&nbsp; &#128308; Priya &middot; Contract Draft &middot; 12d &middot; &#128236;&times;1</div>
+            <div class="ios-mockup">
+              <div class="ios-notch"></div>
+              <div class="ios-body">
+                <div class="ios-header">
+                  <span>&#128682; The Waiting Room</span>
+                  <span class="ios-status-text">All clear!</span>
                 </div>
-                <div class="tui-panel">
-                  <div class="tui-panel-title tui-right-title">&#11013;  WAITING FOR ME...</div>
-                  <div class="tui-row">&nbsp; &#128994; Shane &middot; Design Ideas &middot; today</div>
-                  <div class="tui-row">&nbsp; &#128993; Client &middot; Proposal &middot; 4d</div>
+                <div class="ios-tabs">
+                  <span class="ios-tab ios-tab-active">&#10145; Waiting For</span>
+                  <span class="ios-tab">&#11013; Waiting On Me</span>
+                </div>
+                <div class="ios-panel">
+                  <div class="ios-panel-title ios-left-title">&#10145; I'M WAITING FOR... <span class="mac-count">3</span></div>
+                  <div class="ios-row ios-row-selected">
+                    <span class="mock-dot mock-green"></span> Sherin &middot; Trip &middot; <span class="mock-age mock-age-green">today</span>
+                  </div>
+                  <div class="ios-row">
+                    <span class="mock-dot mock-yellow"></span> AWS &middot; Ticket &middot; <span class="mock-age mock-age-yellow">5d</span>
+                  </div>
+                  <div class="ios-row">
+                    <span class="mock-dot mock-red"></span> Priya &middot; Contract &middot; <span class="mock-age mock-age-red">12d</span>
+                  </div>
+                </div>
+                <div class="ios-toolbar">
+                  <span class="ios-tool-btn">&#10133; Add</span>
+                  <span class="ios-tool-btn">&#9989; Resolve</span>
+                  <span class="ios-tool-btn">&#128276; Nudge</span>
+                  <span class="ios-tool-btn">&#128337; History</span>
+                  <span class="ios-tool-btn">&#127912; Theme</span>
                 </div>
               </div>
-              <div class="tui-status">Waiting on 3 &middot; blocking 2 &middot; oldest: 12d</div>
-              <div class="tui-footer">A Add &middot; R Resolve &middot; N Nudge &middot; H History &middot; T Theme &middot; Q Quit</div>
             </div>
           </div>
-          <h3>Textual TUI</h3>
-          <p>For terminal lovers. SSH into a server, open a tmux pane, and check your loops without leaving the command line.</p>
+          <h3>SwiftUI iOS App</h3>
+          <p>Your open loops in your pocket. Swipe to resolve, swipe to nudge. Same data, synced via iCloud.</p>
           <ul class="app-features">
-            <li>Built with Python Textual</li>
-            <li>Works over SSH</li>
-            <li>Same keyboard shortcuts as the Mac app</li>
+            <li>Built with SwiftUI for iPhone &amp; iPad</li>
+            <li>Swipe gestures for resolve &amp; nudge</li>
+            <li>Side-by-side panels on iPad</li>
           </ul>
         </div>
       </div>
@@ -331,7 +344,7 @@
     <div class="section-inner">
       <div class="section-label">Themes</div>
       <h2>Pick your <span class="gradient-text">vibe</span></h2>
-      <p class="section-sub">Six carefully crafted themes. Switch with [T] in either app. Your choice syncs across both.</p>
+      <p class="section-sub">Six carefully crafted themes. Switch with [T] on Mac or tap the palette on iOS. Your choice syncs across all devices.</p>
 
       <div class="themes-grid">
         <div class="theme-card theme-dark active" data-theme="dark">
@@ -420,7 +433,7 @@
 
         <div class="install-tabs">
           <button class="install-tab active" data-tab="mac">macOS App</button>
-          <button class="install-tab" data-tab="tui">Terminal TUI</button>
+          <button class="install-tab" data-tab="ios">iOS App</button>
         </div>
 
         <div class="install-content active" id="tab-mac">
@@ -439,27 +452,28 @@ open "The Waiting Room.app"</code></pre>
           </div>
         </div>
 
-        <div class="install-content" id="tab-tui">
+        <div class="install-content" id="tab-ios">
           <div class="code-block">
             <div class="code-header">
               <span>Terminal</span>
-              <button class="copy-btn" data-target="code-tui">Copy</button>
+              <button class="copy-btn" data-target="code-ios">Copy</button>
             </div>
-            <pre id="code-tui"><code><span class="code-comment"># Clone the repo</span>
+            <pre id="code-ios"><code><span class="code-comment"># Clone the repo</span>
 git clone https://github.com/rijo-george/waiting-room.git
-cd waiting-room/tui
+cd waiting-room/ios
 
-<span class="code-comment"># Install dependency</span>
-pip install textual
+<span class="code-comment"># Generate Xcode project (requires xcodegen)</span>
+brew install xcodegen
+xcodegen generate
 
-<span class="code-comment"># Run</span>
-python3 waiting_room.py</code></pre>
+<span class="code-comment"># Open in Xcode and run on device</span>
+open WaitingRoom.xcodeproj</code></pre>
           </div>
         </div>
 
         <div class="data-note">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v8m0 2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span>All data stored locally at <code>~/.waiting-room/data.json</code>. Both apps share the same file.</span>
+          <span>Data syncs via iCloud Drive. Both apps share the same JSON files automatically.</span>
         </div>
       </div>
     </div>
@@ -478,7 +492,6 @@ python3 waiting_room.py</code></pre>
         <div class="shortcut"><kbd>T</kbd><span>Theme</span></div>
         <div class="shortcut"><kbd>S</kbd><span>Switch panel</span></div>
         <div class="shortcut"><kbd>J</kbd> / <kbd>K</kbd><span>Navigate</span></div>
-        <div class="shortcut"><kbd>Q</kbd><span>Quit</span></div>
       </div>
     </div>
   </section>
@@ -491,9 +504,9 @@ python3 waiting_room.py</code></pre>
         <span>The Waiting Room</span>
       </div>
       <div class="footer-right">
-        <span>Built with SwiftUI + Textual</span>
+        <span>Built with SwiftUI</span>
         <span>&middot;</span>
-        <span>100% local, 0% cloud</span>
+        <span>macOS + iOS &middot; iCloud sync</span>
       </div>
     </div>
   </footer>
