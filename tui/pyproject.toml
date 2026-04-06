@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "waiting-room"
-version = "1.0.2"
+version = "1.0.3"
 description = "Track every open loop in both directions — who owes you, and who you're blocking."
 readme = "README.md"
 license = "MIT"

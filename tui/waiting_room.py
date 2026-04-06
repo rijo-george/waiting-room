@@ -646,15 +646,11 @@ class WaitingRoomApp(App):
 
     TITLE = "🚪 The Waiting Room"
 
-    def __init__(self):
+    def __init__(self, theme_name="dark"):
         super().__init__()
         self.data = load_data()
         self._active_panel = "waiting_for"
-        config = load_config()
-        self._theme_name = config.get("theme", "dark")
-        if self._theme_name not in THEMES:
-            self._theme_name = "dark"
-        self.CSS = build_css(THEMES[self._theme_name])
+        self._theme_name = theme_name
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -666,6 +662,7 @@ class WaitingRoomApp(App):
         yield Footer()
 
     def on_mount(self):
+        self.dark = self._theme_name != "light"
         self.update_status()
 
     def _apply_theme(self, theme_name):
@@ -779,9 +776,16 @@ class WaitingRoomApp(App):
         self.exit()
 
 
+def _get_theme_name():
+    config = load_config()
+    name = config.get("theme", "dark")
+    return name if name in THEMES else "dark"
+
 def main():
     while True:
-        app = WaitingRoomApp()
+        theme_name = _get_theme_name()
+        WaitingRoomApp.CSS = build_css(THEMES[theme_name])
+        app = WaitingRoomApp(theme_name=theme_name)
         app.run()
         if app.return_code != 42:
             break
