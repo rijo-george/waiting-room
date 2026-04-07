@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 
 // MARK: - Data model (matches ~/.waiting-room/data.json)
@@ -237,10 +238,18 @@ class WaitingRoomStore: ObservableObject {
         data = WaitingData(waiting_for: [], waiting_on_me: [], history: [])
         coordinatedLoad()
         startFileMonitor()
+
+        // Reload when app becomes active (covers wake from sleep, offline→online)
+        NotificationCenter.default.addObserver(
+            forName: NSApplication.didBecomeActiveNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            self?.coordinatedLoad()
+        }
     }
 
     deinit {
         fileMonitor?.cancel()
+        NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - Coordinated Load / Save
@@ -330,13 +339,20 @@ class WaitingRoomStore: ObservableObject {
     // MARK: - File monitoring
 
     private func startFileMonitor() {
+        // Cancel existing monitor if any
+        fileMonitor?.cancel()
+        fileMonitor = nil
+
         let fd = open(dataFile.path, O_EVTONLY)
         guard fd >= 0 else { return }
         fileDescriptor = fd
         let source = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: fd, eventMask: [.write, .rename], queue: .main)
         source.setEventHandler { [weak self] in
-            self?.coordinatedLoad()
+            guard let self else { return }
+            self.coordinatedLoad()
+            // Re-establish monitor on rename (iCloud replaces the file)
+            self.startFileMonitor()
         }
         source.setCancelHandler { close(fd) }
         source.resume()

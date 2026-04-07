@@ -146,7 +146,7 @@ class WaitingRoomStore: ObservableObject {
     // MARK: - File monitoring
 
     private func startMonitoring() {
-        // Use NSMetadataQuery for iCloud file changes
+        // Use NSMetadataQuery for iCloud file changes (handles offline→online)
         let query = NSMetadataQuery()
         query.predicate = NSPredicate(format: "%K == %@", NSMetadataItemFSNameKey, "data.json")
         query.searchScopes = [NSMetadataQueryUbiquitousDocumentsScope]
@@ -158,16 +158,28 @@ class WaitingRoomStore: ObservableObject {
 
         // Also monitor via GCD for local/direct changes
         startFileMonitor()
+
+        // Reload when app returns to foreground (covers offline→online)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(fileDidChange),
+            name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     private func startFileMonitor() {
+        // Cancel existing monitor if any
+        fileMonitor?.cancel()
+        fileMonitor = nil
+
         let fd = open(dataFile.path, O_EVTONLY)
         guard fd >= 0 else { return }
         fileDescriptor = fd
         let source = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: fd, eventMask: [.write, .rename], queue: .main)
         source.setEventHandler { [weak self] in
-            self?.coordinatedLoad()
+            guard let self else { return }
+            self.coordinatedLoad()
+            // Re-establish monitor on rename (iCloud replaces the file)
+            self.startFileMonitor()
         }
         source.setCancelHandler { close(fd) }
         source.resume()
@@ -179,6 +191,7 @@ class WaitingRoomStore: ObservableObject {
         fileMonitor = nil
         metadataQuery?.stop()
         metadataQuery = nil
+        NotificationCenter.default.removeObserver(self)
     }
 
     @objc private func fileDidChange() {
