@@ -103,7 +103,15 @@ enum ISO8601Flexible {
 // MARK: - Storage location (iCloud Drive with local fallback)
 
 enum StorageLocation {
-    private static let containerID = "iCloud.com.rijo.waitingroom"
+    /// iCloud ubiquity container path — same location the iOS app uses via
+    /// url(forUbiquityContainerIdentifier: "iCloud.com.rijo.waitingroom")
+    /// On macOS the container lives at ~/Library/Mobile Documents/iCloud~com~rijo~waitingroom/
+    static let iCloudDir: URL = {
+        let home = FileManager.default.homeDirectoryForCurrentUser
+        return home
+            .appendingPathComponent("Library/Mobile Documents/iCloud~com~rijo~waitingroom")
+            .appendingPathComponent("Documents")
+    }()
 
     /// Legacy iCloud Drive path (pre-container migration)
     static let legacyICloudDir: URL = {
@@ -120,23 +128,27 @@ enum StorageLocation {
     }()
 
     /// Resolve the best storage directory:
-    /// 1. If iCloud ubiquity container is available, use it (syncs with iOS)
+    /// 1. If iCloud Drive is available, use the shared ubiquity container (syncs with iOS)
     /// 2. Otherwise fall back to ~/.waiting-room
     static func resolve() -> URL {
         let fm = FileManager.default
 
-        // Use the shared iCloud ubiquity container (same as iOS app)
-        if let containerURL = fm.url(forUbiquityContainerIdentifier: containerID) {
-            let docsURL = containerURL.appendingPathComponent("Documents")
-            try? fm.createDirectory(at: docsURL, withIntermediateDirectories: true)
+        // Check if iCloud Drive root exists (means user has iCloud enabled)
+        let iCloudRoot = fm.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/Mobile Documents")
+        let iCloudAvailable = fm.fileExists(atPath: iCloudRoot.path)
+
+        if iCloudAvailable {
+            // Use the shared ubiquity container path (same as iOS app)
+            try? fm.createDirectory(at: iCloudDir, withIntermediateDirectories: true)
 
             // Migrate from legacy locations if needed
-            migrateToContainer(fm: fm, destination: docsURL)
+            migrateToContainer(fm: fm, destination: iCloudDir)
 
             // Create/update symlink so TUI can find data at ~/.waiting-room
-            setupSymlink(fm: fm, target: docsURL)
+            setupSymlink(fm: fm, target: iCloudDir)
 
-            return docsURL
+            return iCloudDir
         }
 
         // Fallback to local
