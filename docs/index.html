@@ -28,13 +28,21 @@
         .btn.sec:hover{background:rgba(0,0,0,.06);color:#4a3f34}
         .meta{margin-top:14px;font-size:11px;color:#aaa}
         .line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.06),transparent)}
-        .how{width:100%;padding:48px 0}
-        .how h2{font-family:'Special Elite',monospace;font-size:14px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;text-align:center}
-        .steps{display:flex;flex-direction:column;gap:18px}
-        .step{display:flex;gap:14px;align-items:flex-start}
-        .sn{flex-shrink:0;width:26px;height:26px;border-radius:7px;background:rgba(210,120,60,.08);border:1px solid rgba(210,120,60,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#c06830}
-        .st h3{font-family:'Special Elite',monospace;font-size:14px;color:#3a2e24;margin-bottom:3px}
-        .st p{font-size:12px;color:#999;line-height:1.6}
+        /* Mockup — dual panel */
+        .mockup{width:100%;max-width:380px;margin:20px auto 50px}
+        .mock-app{background:#1a1a1a;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.08)}
+        .mock-titlebar{height:28px;background:#0d0d0d;display:flex;align-items:center;padding:0 12px;gap:6px}
+        .mock-titlebar .dot{width:8px;height:8px;border-radius:50%}
+        .mock-titlebar span{flex:1;text-align:center;font-size:10px;color:#555;font-family:'IBM Plex Mono',monospace}
+        .mock-panels{display:grid;grid-template-columns:1fr 1fr;min-height:140px}
+        .mock-left,.mock-right{padding:10px 12px}
+        .mock-left{border-right:1px solid rgba(255,255,255,.04)}
+        .mock-label{font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-family:'IBM Plex Mono',monospace}
+        .mock-label.l{color:#d2783c}
+        .mock-label.r{color:#4db8b8}
+        .mock-row{display:flex;align-items:center;gap:5px;padding:4px 0;font-size:9px;font-family:'IBM Plex Mono',monospace;color:#888}
+        .mock-row .d{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+        .mock-row .age{margin-left:auto;font-size:7px;padding:1px 4px;border-radius:3px}
         .features{width:100%;padding:48px 0;text-align:center}
         .features h2{font-family:'Special Elite',monospace;font-size:14px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
         .g{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
@@ -62,6 +70,29 @@
             </div>
             <p class="meta">macOS 14+ &middot; iOS 17+ &middot; iCloud sync &middot; free</p>
         </section>
+        <section class="mockup">
+            <div class="mock-app">
+                <div class="mock-titlebar">
+                    <div class="dot" style="background:#ff5f57"></div>
+                    <div class="dot" style="background:#febc2e"></div>
+                    <div class="dot" style="background:#28c840"></div>
+                    <span>The Waiting Room</span>
+                </div>
+                <div class="mock-panels">
+                    <div class="mock-left">
+                        <div class="mock-label l">&#10145; I'm waiting for</div>
+                        <div class="mock-row"><div class="d" style="background:#28c840"></div>Sherin &middot; Trip<span class="age" style="background:rgba(40,200,64,.1);color:#28c840">today</span></div>
+                        <div class="mock-row"><div class="d" style="background:#febc2e"></div>AWS &middot; Ticket<span class="age" style="background:rgba(254,188,46,.1);color:#febc2e">5d</span></div>
+                        <div class="mock-row"><div class="d" style="background:#ff5f57"></div>Priya &middot; Contract<span class="age" style="background:rgba(255,95,87,.1);color:#ff5f57">12d</span></div>
+                    </div>
+                    <div class="mock-right">
+                        <div class="mock-label r">&#11013; Waiting for me</div>
+                        <div class="mock-row"><div class="d" style="background:#28c840"></div>Shane &middot; Ideas<span class="age" style="background:rgba(40,200,64,.1);color:#28c840">today</span></div>
+                        <div class="mock-row"><div class="d" style="background:#febc2e"></div>Alex &middot; Review<span class="age" style="background:rgba(254,188,46,.1);color:#febc2e">3d</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <div class="line"></div>
         <section class="features">
             <h2>Features</h2>
@@ -77,7 +108,7 @@
         <div class="line"></div>
         <section class="about"><p>No accounts. No tracking. Data syncs through your own iCloud. macOS + iOS.</p></section>
         <div class="line"></div>
-        <footer><p>made by <a href="https://github.com/rijo-george">rijo</a> &middot; <a href="https://github.com/rijo-george/waiting-room">source</a> &middot; 2026</p></footer>
+        <footer><p>made by <a href="https://github.com/rijo-george">rijo</a> &middot; <a href="https://github.com/rijo-george/waiting-room">github</a> &middot; 2026</p></footer>
     </div>
 </body>
 </html>
