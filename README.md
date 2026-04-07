@@ -8,7 +8,7 @@ Track every open loop in both directions — who owes you, and who you're blocki
 
 ## Download
 
-**[Download for Mac](https://github.com/rijo-george/waiting-room/releases/latest)** — Universal binary, signed & notarized. Works on Apple Silicon and Intel.
+**[Download for Mac](https://github.com/rijo-george/waiting-room/releases/download/v2.1.0/WaitingRoom-1.0.0.dmg)** — Universal binary, signed & notarized. Works on Apple Silicon and Intel.
 
 **[Get on the App Store (iOS)](https://apps.apple.com/app/the-waiting-room/id0000000000)** — iPhone & iPad.
 
