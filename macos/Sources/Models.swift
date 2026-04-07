@@ -227,28 +227,109 @@ class WaitingRoomStore: ObservableObject {
     private let dataDir: URL
     private let dataFile: URL
     private let configFile: URL
+    private var fileMonitor: DispatchSourceFileSystemObject?
+    private var fileDescriptor: Int32 = -1
 
     init() {
         dataDir = StorageLocation.resolve()
         dataFile = dataDir.appendingPathComponent("data.json")
         configFile = dataDir.appendingPathComponent("config.json")
         data = WaitingData(waiting_for: [], waiting_on_me: [], history: [])
-        load()
+        coordinatedLoad()
+        startFileMonitor()
     }
 
-    func load() {
+    deinit {
+        fileMonitor?.cancel()
+    }
+
+    // MARK: - Coordinated Load / Save
+
+    func load() { coordinatedLoad() }
+
+    func coordinatedLoad() {
         try? FileManager.default.createDirectory(at: dataDir, withIntermediateDirectories: true)
-        guard let raw = try? Data(contentsOf: dataFile),
-              let decoded = try? JSONDecoder().decode(WaitingData.self, from: raw)
-        else { return }
-        data = decoded
+        let coordinator = NSFileCoordinator()
+        var coordError: NSError?
+        coordinator.coordinate(readingItemAt: dataFile, options: [], error: &coordError) { url in
+            guard let raw = try? Data(contentsOf: url),
+                  let decoded = try? JSONDecoder().decode(WaitingData.self, from: raw)
+            else { return }
+            DispatchQueue.main.async {
+                self.data = decoded
+            }
+        }
     }
 
     func save() {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        guard let raw = try? encoder.encode(data) else { return }
-        try? raw.write(to: dataFile, options: .atomic)
+        let coordinator = NSFileCoordinator()
+        var coordError: NSError?
+
+        coordinator.coordinate(readingItemAt: dataFile, options: [],
+                               writingItemAt: dataFile, options: .forReplacing,
+                               error: &coordError) { readURL, writeURL in
+            // Read latest from disk and merge to avoid overwriting remote changes
+            var merged = self.data
+            if let raw = try? Data(contentsOf: readURL),
+               let disk = try? JSONDecoder().decode(WaitingData.self, from: raw) {
+                merged = Self.merge(local: self.data, remote: disk)
+            }
+
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            guard let raw = try? encoder.encode(merged) else { return }
+            try? raw.write(to: writeURL, options: .atomic)
+
+            DispatchQueue.main.async {
+                self.data = merged
+            }
+        }
+    }
+
+    // MARK: - Merge logic (union by item ID)
+
+    private static func merge(local: WaitingData, remote: WaitingData) -> WaitingData {
+        let mergedHistory = mergeItems(local: local.history, remote: remote.history)
+        let historyIDs = Set(mergedHistory.map(\.id))
+
+        return WaitingData(
+            waiting_for: mergeItems(local: local.waiting_for, remote: remote.waiting_for)
+                .filter { !historyIDs.contains($0.id) },
+            waiting_on_me: mergeItems(local: local.waiting_on_me, remote: remote.waiting_on_me)
+                .filter { !historyIDs.contains($0.id) },
+            history: mergedHistory
+        )
+    }
+
+    private static func mergeItems(local: [WaitingItem], remote: [WaitingItem]) -> [WaitingItem] {
+        var byID: [String: WaitingItem] = [:]
+        for item in remote { byID[item.id] = item }
+        for item in local { byID[item.id] = item }
+        var result: [WaitingItem] = []
+        var seen = Set<String>()
+        for item in local {
+            if seen.insert(item.id).inserted { result.append(byID[item.id]!) }
+        }
+        for item in remote {
+            if seen.insert(item.id).inserted { result.append(byID[item.id]!) }
+        }
+        return result
+    }
+
+    // MARK: - File monitoring
+
+    private func startFileMonitor() {
+        let fd = open(dataFile.path, O_EVTONLY)
+        guard fd >= 0 else { return }
+        fileDescriptor = fd
+        let source = DispatchSource.makeFileSystemObjectSource(
+            fileDescriptor: fd, eventMask: [.write, .rename], queue: .main)
+        source.setEventHandler { [weak self] in
+            self?.coordinatedLoad()
+        }
+        source.setCancelHandler { close(fd) }
+        source.resume()
+        fileMonitor = source
     }
 
     // MARK: Actions
