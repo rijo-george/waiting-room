@@ -251,14 +251,18 @@ class WaitingRoomStore: ObservableObject {
         try? FileManager.default.createDirectory(at: dataDir, withIntermediateDirectories: true)
         let coordinator = NSFileCoordinator()
         var coordError: NSError?
+        var needsSave = false
         coordinator.coordinate(readingItemAt: dataFile, options: [], error: &coordError) { url in
             guard let raw = try? Data(contentsOf: url),
-                  let decoded = try? JSONDecoder().decode(WaitingData.self, from: raw)
+                  let disk = try? JSONDecoder().decode(WaitingData.self, from: raw)
             else { return }
+            let merged = Self.merge(local: self.data, remote: disk)
+            needsSave = !Self.dataEqual(merged, disk)
             DispatchQueue.main.async {
-                self.data = decoded
+                self.data = merged
             }
         }
+        if needsSave { save() }
     }
 
     func save() {
@@ -314,6 +318,13 @@ class WaitingRoomStore: ObservableObject {
             if seen.insert(item.id).inserted { result.append(byID[item.id]!) }
         }
         return result
+    }
+
+    private static func dataEqual(_ a: WaitingData, _ b: WaitingData) -> Bool {
+        let ids = { (d: WaitingData) in
+            Set(d.waiting_for.map(\.id) + d.waiting_on_me.map(\.id) + d.history.map(\.id))
+        }
+        return ids(a) == ids(b)
     }
 
     // MARK: - File monitoring

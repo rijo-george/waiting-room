@@ -57,17 +57,26 @@ class WaitingRoomStore: ObservableObject {
 
     func load() { coordinatedLoad() }
 
+    /// Reads from disk and merges with in-memory state so local changes aren't lost.
+    /// On first load (empty in-memory), this is effectively a full replace.
+    /// On subsequent loads (file monitor), this preserves items added locally
+    /// that haven't synced to the other device yet.
     func coordinatedLoad() {
         let coordinator = NSFileCoordinator()
         var coordError: NSError?
+        var needsSave = false
         coordinator.coordinate(readingItemAt: dataFile, options: [], error: &coordError) { url in
             guard let raw = try? Data(contentsOf: url),
-                  let decoded = try? JSONDecoder().decode(WaitingData.self, from: raw)
+                  let disk = try? JSONDecoder().decode(WaitingData.self, from: raw)
             else { return }
+            let merged = Self.merge(local: self.data, remote: disk)
+            // If merge produced something different from disk, we need to save back
+            needsSave = !Self.dataEqual(merged, disk)
             DispatchQueue.main.async {
-                self.data = decoded
+                self.data = merged
             }
         }
+        if needsSave { save() }
     }
 
     func save() {
@@ -93,6 +102,13 @@ class WaitingRoomStore: ObservableObject {
                 self.data = merged
             }
         }
+    }
+
+    private static func dataEqual(_ a: WaitingData, _ b: WaitingData) -> Bool {
+        let ids = { (d: WaitingData) in
+            Set(d.waiting_for.map(\.id) + d.waiting_on_me.map(\.id) + d.history.map(\.id))
+        }
+        return ids(a) == ids(b)
     }
 
     // MARK: - Merge logic (union by item ID)
