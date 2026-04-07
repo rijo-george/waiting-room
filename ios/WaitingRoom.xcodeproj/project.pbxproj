@@ -19,6 +19,7 @@
 		A472C309AB2D7B3FF3B03663 /* ReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489845F179F38E1A2EFCCD7F /* ReceiptView.swift */; };
 		A8B32A26C2956B4398F1E740 /* NudgeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2719816D525E851627B2BE4D /* NudgeSheet.swift */; };
 		AC1ACAD89A36E7D744CC137B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB1104D7C4809CC6AB3E497 /* ContentView.swift */; };
+		BB46E8BF4A0B98E5CE083718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAFDFC0E6F96C6A1999E39EF /* Assets.xcassets */; };
 		DCF554B7C6BE0D2BFAB57EA0 /* ConfirmSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE165D30C279FED6289B4135 /* ConfirmSheet.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 		73C290C3AFCB691CBE08AD1D /* ClipboardRadar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardRadar.swift; sourceTree = "<group>"; };
 		C7C2BF387DFF782745AE5964 /* WaitingRoom.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WaitingRoom.entitlements; sourceTree = "<group>"; };
 		CFA07AF8A8F17E6A4D1C38CA /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		DAFDFC0E6F96C6A1999E39EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E393F5CD7EF9003532ABAC66 /* WaitingRoomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomApp.swift; sourceTree = "<group>"; };
 		E6B701221B7F763F9933DE70 /* AddItemSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemSheet.swift; sourceTree = "<group>"; };
 		ECB1104D7C4809CC6AB3E497 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				E6B701221B7F763F9933DE70 /* AddItemSheet.swift */,
+				DAFDFC0E6F96C6A1999E39EF /* Assets.xcassets */,
 				73C290C3AFCB691CBE08AD1D /* ClipboardRadar.swift */,
 				EE165D30C279FED6289B4135 /* ConfirmSheet.swift */,
 				ECB1104D7C4809CC6AB3E497 /* ContentView.swift */,
@@ -88,6 +91,7 @@
 			buildConfigurationList = E0C43D227B8E4981BCBCC5F7 /* Build configuration list for PBXNativeTarget "WaitingRoom" */;
 			buildPhases = (
 				843EC93AFF1E75BE65678C66 /* Sources */,
+				29677D480733798C75F668CD /* Resources */,
 			);
 			buildRules = (
 			);
@@ -110,7 +114,7 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					C5438AE573328D1BC492B242 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = K8383Q54VB;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -133,6 +137,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		29677D480733798C75F668CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB46E8BF4A0B98E5CE083718 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		843EC93AFF1E75BE65678C66 /* Sources */ = {
@@ -162,6 +177,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = WaitingRoom/WaitingRoom.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = WaitingRoom/Info.plist;
@@ -213,7 +229,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K8383Q54VB;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -229,7 +245,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.waitingroom.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rijo.waitingroom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -244,6 +260,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = WaitingRoom/WaitingRoom.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = WaitingRoom/Info.plist;
@@ -295,7 +312,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = K8383Q54VB;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -318,7 +335,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.waitingroom.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rijo.waitingroom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

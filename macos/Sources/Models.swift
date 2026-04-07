@@ -103,8 +103,10 @@ enum ISO8601Flexible {
 // MARK: - Storage location (iCloud Drive with local fallback)
 
 enum StorageLocation {
-    /// iCloud Drive path — syncs across Macs automatically
-    static let iCloudDir: URL = {
+    private static let containerID = "iCloud.com.rijo.waitingroom"
+
+    /// Legacy iCloud Drive path (pre-container migration)
+    static let legacyICloudDir: URL = {
         let home = FileManager.default.homeDirectoryForCurrentUser
         return home
             .appendingPathComponent("Library/Mobile Documents/com~apple~CloudDocs")
@@ -118,27 +120,23 @@ enum StorageLocation {
     }()
 
     /// Resolve the best storage directory:
-    /// 1. If iCloud Drive exists, use it and symlink ~/.waiting-room -> iCloud for TUI compat
+    /// 1. If iCloud ubiquity container is available, use it (syncs with iOS)
     /// 2. Otherwise fall back to ~/.waiting-room
     static func resolve() -> URL {
         let fm = FileManager.default
 
-        // Check if iCloud Drive root exists
-        let iCloudRoot = fm.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/Mobile Documents/com~apple~CloudDocs")
-        let iCloudAvailable = fm.fileExists(atPath: iCloudRoot.path)
+        // Use the shared iCloud ubiquity container (same as iOS app)
+        if let containerURL = fm.url(forUbiquityContainerIdentifier: containerID) {
+            let docsURL = containerURL.appendingPathComponent("Documents")
+            try? fm.createDirectory(at: docsURL, withIntermediateDirectories: true)
 
-        if iCloudAvailable {
-            // Create the WaitingRoom folder in iCloud Drive
-            try? fm.createDirectory(at: iCloudDir, withIntermediateDirectories: true)
-
-            // Migrate existing local data to iCloud if needed
-            migrateToICloud(fm: fm)
+            // Migrate from legacy locations if needed
+            migrateToContainer(fm: fm, destination: docsURL)
 
             // Create/update symlink so TUI can find data at ~/.waiting-room
-            setupSymlink(fm: fm)
+            setupSymlink(fm: fm, target: docsURL)
 
-            return iCloudDir
+            return docsURL
         }
 
         // Fallback to local
@@ -146,38 +144,46 @@ enum StorageLocation {
         return localDir
     }
 
-    /// Move existing ~/.waiting-room/*.json files to iCloud (one-time migration)
-    private static func migrateToICloud(fm: FileManager) {
-        let localPath = localDir.path
+    /// Migrate data from legacy locations to the ubiquity container (one-time)
+    private static func migrateToContainer(fm: FileManager, destination: URL) {
+        // Sources to migrate from, in priority order
+        let sources = [legacyICloudDir, localDir]
 
-        // Only migrate if ~/.waiting-room is a real directory (not already a symlink)
-        var isDir: ObjCBool = false
-        guard fm.fileExists(atPath: localPath, isDirectory: &isDir), isDir.boolValue else { return }
+        for source in sources {
+            let sourcePath = source.path
 
-        // Check it's not already a symlink
-        let attrs = try? fm.attributesOfItem(atPath: localPath)
-        if attrs?[.type] as? FileAttributeType == .typeSymbolicLink { return }
+            // Skip symlinks
+            let attrs = try? fm.attributesOfItem(atPath: sourcePath)
+            if attrs?[.type] as? FileAttributeType == .typeSymbolicLink { continue }
 
-        // Move data.json and config.json if they exist and iCloud versions don't
-        for file in ["data.json", "config.json"] {
-            let src = localDir.appendingPathComponent(file)
-            let dst = iCloudDir.appendingPathComponent(file)
-            if fm.fileExists(atPath: src.path) && !fm.fileExists(atPath: dst.path) {
-                try? fm.copyItem(at: src, to: dst)
+            // Skip if source doesn't exist as a real directory
+            var isDir: ObjCBool = false
+            guard fm.fileExists(atPath: sourcePath, isDirectory: &isDir), isDir.boolValue else { continue }
+
+            // Copy data.json and config.json if they exist and destination versions don't
+            var migrated = false
+            for file in ["data.json", "config.json"] {
+                let src = source.appendingPathComponent(file)
+                let dst = destination.appendingPathComponent(file)
+                if fm.fileExists(atPath: src.path) && !fm.fileExists(atPath: dst.path) {
+                    try? fm.copyItem(at: src, to: dst)
+                    migrated = true
+                }
+            }
+
+            if migrated && source == localDir {
+                // Back up and remove local dir so we can replace with symlink
+                let backup = fm.homeDirectoryForCurrentUser.appendingPathComponent(".waiting-room-backup")
+                try? fm.removeItem(at: backup)
+                try? fm.moveItem(at: localDir, to: backup)
             }
         }
-
-        // Remove old directory so we can replace with symlink
-        // Rename to .waiting-room-backup first for safety
-        let backup = fm.homeDirectoryForCurrentUser.appendingPathComponent(".waiting-room-backup")
-        try? fm.removeItem(at: backup)
-        try? fm.moveItem(at: localDir, to: backup)
     }
 
-    /// Symlink ~/.waiting-room -> iCloud dir so TUI works transparently
-    private static func setupSymlink(fm: FileManager) {
+    /// Symlink ~/.waiting-room -> iCloud container so TUI works transparently
+    private static func setupSymlink(fm: FileManager, target: URL) {
         let linkPath = localDir.path
-        let targetPath = iCloudDir.path
+        let targetPath = target.path
 
         // Already a correct symlink?
         if let dest = try? fm.destinationOfSymbolicLink(atPath: linkPath), dest == targetPath {
@@ -191,7 +197,7 @@ enum StorageLocation {
             if attrs?[.type] as? FileAttributeType == .typeSymbolicLink {
                 try? fm.removeItem(atPath: linkPath)
             }
-            // If it's a real directory, migrateToICloud should have handled it
+            // If it's a real directory, migrateToContainer should have handled it
         }
 
         // Create symlink

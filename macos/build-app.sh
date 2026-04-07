@@ -25,6 +25,7 @@ echo -n "APPL????" > "$CONTENTS/PkgInfo"
 
 echo "==> Code signing..."
 codesign --force --options runtime --timestamp \
+    --entitlements "$SCRIPT_DIR/WaitingRoom.entitlements" \
     --sign "$SIGN_IDENTITY" \
     "$APP_DIR"
 

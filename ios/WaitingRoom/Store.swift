@@ -25,14 +25,14 @@ class WaitingRoomStore: ObservableObject {
         let fm = FileManager.default
 
         // Try iCloud container first — this syncs with macOS app
-        if let iCloudURL = fm.url(forUbiquityContainerIdentifier: nil) {
-            let docsURL = iCloudURL.appendingPathComponent("Documents").appendingPathComponent("WaitingRoom")
+        if let iCloudURL = fm.url(forUbiquityContainerIdentifier: "iCloud.com.rijo.waitingroom") {
+            let docsURL = iCloudURL.appendingPathComponent("Documents")
             try? fm.createDirectory(at: docsURL, withIntermediateDirectories: true)
             return docsURL
         }
 
         // Fall back to app group container (for potential widget sharing)
-        if let groupURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.com.waitingroom.app") {
+        if let groupURL = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.com.rijo.waitingroom") {
             let dir = groupURL.appendingPathComponent("WaitingRoom")
             try? fm.createDirectory(at: dir, withIntermediateDirectories: true)
             return dir

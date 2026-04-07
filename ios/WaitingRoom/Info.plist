@@ -40,6 +40,8 @@
     <false/>
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleDefault</string>
+    <key>CFBundleIconName</key>
+    <string>AppIcon</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
 </dict>

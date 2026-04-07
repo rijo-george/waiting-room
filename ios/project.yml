@@ -13,10 +13,10 @@ settings:
     SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: false
     INFOPLIST_FILE: WaitingRoom/Info.plist
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-    PRODUCT_BUNDLE_IDENTIFIER: com.waitingroom.ios
+    PRODUCT_BUNDLE_IDENTIFIER: com.rijo.waitingroom
     MARKETING_VERSION: "1.0.0"
     CURRENT_PROJECT_VERSION: "1"
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: "K8383Q54VB"
     CODE_SIGN_STYLE: Automatic
 
 targets:
@@ -25,14 +25,19 @@ targets:
     platform: iOS
     sources:
       - path: WaitingRoom
-        excludes:
-          - "*.xcassets/**/.*"
     settings:
       base:
         PRODUCT_NAME: "The Waiting Room"
         INFOPLIST_FILE: WaitingRoom/Info.plist
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: true
     entitlements:
       path: WaitingRoom/WaitingRoom.entitlements
       properties:
         com.apple.security.application-groups:
-          - group.com.waitingroom.app
+          - group.com.rijo.waitingroom
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.rijo.waitingroom
+        com.apple.developer.icloud-services:
+          - CloudDocuments
+        com.apple.developer.ubiquity-container-identifiers:
+          - iCloud.com.rijo.waitingroom
