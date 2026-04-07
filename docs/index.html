@@ -1,495 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Waiting Room — Track every open loop</title>
-  <meta name="description" content="A beautiful dual-panel tracker for everything you're waiting on and everything waiting on you. Native macOS + iOS apps with iCloud sync.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Waiting Room — Track Every Open Loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'IBM Plex Mono','Courier New',monospace;background:#f4efe6;color:#4a3f34;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+        body::before{content:'';position:fixed;inset:0;opacity:.035;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:999}
+        .c{max-width:600px;width:100%;padding:0 24px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+        header{width:100%;display:flex;justify-content:space-between;align-items:center;padding:36px 0 0}
+        .wm{font-family:'Special Elite',monospace;font-size:16px;color:#8a7a68;letter-spacing:2px}
+        header a{font-size:12px;color:#a0937f;text-decoration:none;transition:color .3s}header a:hover{color:#4a3f34}
+        .hero{text-align:center;padding:90px 0 50px}
+        .icon{width:80px;height:80px;margin:0 auto 44px;background:linear-gradient(135deg,#2a1f18,#1a1410);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 40px rgba(40,30,20,.15)}
+        .icon svg{width:32px;height:32px}
+        h1{font-family:'Special Elite',monospace;font-size:clamp(26px,5vw,38px);font-weight:400;color:#1a1a1a;line-height:1.25;margin-bottom:24px}
+        h1 span{color:#c06830}
+        .sub{font-size:14px;line-height:1.8;color:#888;max-width:420px;margin:0 auto 44px}
+        .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+        .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 30px;background:rgba(210,120,60,.08);border:1px solid rgba(210,120,60,.15);border-radius:10px;color:#c06830;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;text-decoration:none;transition:all .3s}
+        .btn:hover{background:rgba(210,120,60,.14);transform:translateY(-1px)}
+        .btn svg{width:15px;height:15px;opacity:.7}
+        .btn.sec{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.06);color:#888}
+        .btn.sec:hover{background:rgba(0,0,0,.06);color:#4a3f34}
+        .meta{margin-top:14px;font-size:11px;color:#aaa}
+        .line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.06),transparent)}
+        .how{width:100%;padding:48px 0}
+        .how h2{font-family:'Special Elite',monospace;font-size:14px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;text-align:center}
+        .steps{display:flex;flex-direction:column;gap:18px}
+        .step{display:flex;gap:14px;align-items:flex-start}
+        .sn{flex-shrink:0;width:26px;height:26px;border-radius:7px;background:rgba(210,120,60,.08);border:1px solid rgba(210,120,60,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#c06830}
+        .st h3{font-family:'Special Elite',monospace;font-size:14px;color:#3a2e24;margin-bottom:3px}
+        .st p{font-size:12px;color:#999;line-height:1.6}
+        .features{width:100%;padding:48px 0;text-align:center}
+        .features h2{font-family:'Special Elite',monospace;font-size:14px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+        .g{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+        .chip{padding:14px 12px;border-radius:8px;background:rgba(0,0,0,.02);border:1px solid rgba(0,0,0,.04);font-size:11px;color:#888;transition:all .25s}
+        .chip:hover{background:rgba(210,120,60,.06);color:#4a3f34}
+        .chip .e{display:block;font-size:18px;margin-bottom:4px}
+        .about{width:100%;padding:44px 0;text-align:center}
+        .about p{font-size:12px;color:#999;line-height:1.8;max-width:400px;margin:0 auto}
+        footer{width:100%;padding:36px 0;text-align:center}
+        footer p{font-size:11px;color:#bbb}
+        footer a{color:#999;text-decoration:none}footer a:hover{color:#4a3f34}
+        @media(max-width:540px){.hero{padding:60px 0 40px}.g{grid-template-columns:1fr}.btns{flex-direction:column;align-items:center}}
+    </style>
 </head>
 <body>
-
-  <!-- Nav -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <span class="nav-icon">&#128682;</span>
-        <span>The Waiting Room</span>
-      </a>
-      <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#killer">Magic</a>
-        <a href="#apps">Apps</a>
-        <a href="#themes">Themes</a>
-        <a href="#get-started" class="nav-cta">Download</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-content">
-      <div class="hero-badge">Mac &middot; iPhone &middot; iCloud sync</div>
-      <h1>Your follow-ups have<br>a <span class="gradient-text">home</span> now</h1>
-      <p class="hero-sub">
-        Track every open loop in both directions. Who owes you? Who are you blocking?
-        One glance. Two panels. Zero excuses.
-      </p>
-      <div class="hero-actions">
-        <a href="https://github.com/rijo-george/waiting-room/releases/download/v2.1.0/WaitingRoom-1.0.0.dmg" class="btn btn-primary">
-          <span>Download for Mac</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="https://apps.apple.com/app/the-waiting-room/id0000000000" class="btn btn-primary">
-          <span>Get on App Store</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-
-      <!-- Hero visual — interactive mockup -->
-      <div class="hero-visual">
-        <div class="mockup">
-          <div class="mockup-bar">
-            <div class="mockup-dots">
-              <span class="dot dot-red"></span>
-              <span class="dot dot-yellow"></span>
-              <span class="dot dot-green"></span>
+    <div class="c">
+        <header><div class="wm">the waiting room</div><a href="https://github.com/rijo-george/waiting-room">github</a></header>
+        <section class="hero">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d2783c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <h1>Track every <span>open loop</span></h1>
+            <p class="sub">Two panels. Who owes you. Who you're blocking. Age indicators. Nudge tracking. Zero things fall through cracks.</p>
+            <div class="btns">
+                <a href="https://github.com/rijo-george/waiting-room/releases/download/v2.1.0/WaitingRoom-1.0.0.dmg" class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download for Mac</a>
+                <a href="https://apps.apple.com/app/the-waiting-room/id0000000000" class="btn sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>iOS App</a>
             </div>
-            <span class="mockup-title">The Waiting Room</span>
-          </div>
-          <div class="mockup-body">
-            <div class="mock-panel mock-left">
-              <div class="mock-panel-header mock-left-header">&#10145; I'M WAITING FOR...</div>
-              <div class="mock-item mock-selected">
-                <span class="mock-dot mock-green"></span>
-                <span><strong>Sherin</strong> &middot; Trip Booking &middot; <span class="mock-age mock-age-green">today</span></span>
-              </div>
-              <div class="mock-item">
-                <span class="mock-dot mock-yellow"></span>
-                <span><strong>AWS</strong> &middot; Support Ticket &middot; <span class="mock-age mock-age-yellow">5d</span></span>
-              </div>
-              <div class="mock-item">
-                <span class="mock-dot mock-red"></span>
-                <span><strong>Priya</strong> &middot; Contract Draft &middot; <span class="mock-age mock-age-red">12d</span> &middot; &#128236;&times;1</span>
-              </div>
+            <p class="meta">macOS 14+ &middot; iOS 17+ &middot; iCloud sync &middot; free</p>
+        </section>
+        <div class="line"></div>
+        <section class="features">
+            <h2>Features</h2>
+            <div class="g">
+                <div class="chip"><span class="e">&#128308;&#128993;&#128994;</span>Age indicators</div>
+                <div class="chip"><span class="e">&#128236;</span>Nudge tracking</div>
+                <div class="chip"><span class="e">&#127384;</span>Shareable receipts</div>
+                <div class="chip"><span class="e">&#128203;</span>Clipboard radar</div>
+                <div class="chip"><span class="e">&#9729;</span>iCloud sync</div>
+                <div class="chip"><span class="e">&#127912;</span>6 themes</div>
             </div>
-            <div class="mock-panel mock-right">
-              <div class="mock-panel-header mock-right-header">&#11013; WAITING FOR ME...</div>
-              <div class="mock-item">
-                <span class="mock-dot mock-green"></span>
-                <span><strong>Shane</strong> &middot; Design Ideas &middot; <span class="mock-age mock-age-green">today</span></span>
-              </div>
-              <div class="mock-item">
-                <span class="mock-dot mock-yellow"></span>
-                <span><strong>Client</strong> &middot; Proposal &middot; <span class="mock-age mock-age-yellow">4d</span></span>
-              </div>
-            </div>
-          </div>
-          <div class="mockup-status">
-            Waiting on 3 &middot; Blocking 2 &middot; Oldest: 12d &middot; 5 resolved
-          </div>
-        </div>
-      </div>
+        </section>
+        <div class="line"></div>
+        <section class="about"><p>No accounts. No tracking. Data syncs through your own iCloud. macOS + iOS.</p></section>
+        <div class="line"></div>
+        <footer><p>made by <a href="https://github.com/rijo-george">rijo</a> &middot; <a href="https://github.com/rijo-george/waiting-room">source</a> &middot; 2026</p></footer>
     </div>
-  </section>
-
-  <!-- Features -->
-  <section class="features" id="features">
-    <div class="section-inner">
-      <div class="section-label">Features</div>
-      <h2>Everything falls through the cracks.<br><span class="gradient-text">Until now.</span></h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">&#8644;</div>
-          <h3>Two-Panel View</h3>
-          <p>Left panel: what you're waiting on. Right panel: what others need from you. Always balanced, always visible.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#128308;</div>
-          <h3>Age Indicators</h3>
-          <p>Green, yellow, red. Items age visually so the oldest open loops scream for attention before you forget them.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#128236;</div>
-          <h3>Nudge Tracking</h3>
-          <p>Log every follow-up. "Sent reminder email." "Pinged on Slack." Build a paper trail without leaving the app.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#9989;</div>
-          <h3>Resolve & Archive</h3>
-          <p>Done? Resolve it. Every item moves to history with timestamps and duration. See your track record over time.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#127912;</div>
-          <h3>6 Themes</h3>
-          <p>Dark, Light, Sunset, Ocean, Forest, Rose. Pick your vibe. Themes sync across all your devices via iCloud.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#128274;</div>
-          <h3>Private by Default</h3>
-          <p>Your data stays on your devices. No accounts. No tracking. iCloud keeps your Mac and iPhone in sync — nothing else touches it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Killer Features -->
-  <section class="killer" id="killer">
-    <div class="section-inner">
-      <div class="section-label">Only here</div>
-      <h2>The features you didn't<br>know you <span class="gradient-text">needed</span></h2>
-
-      <div class="killer-grid">
-        <!-- The Receipt -->
-        <div class="killer-card">
-          <div class="killer-visual">
-            <div class="receipt-mock">
-              <div class="receipt-line receipt-header">THE WAITING ROOM</div>
-              <div class="receipt-line receipt-sub">&mdash; RESOLVED &mdash;</div>
-              <div class="receipt-divider"></div>
-              <div class="receipt-row"><span class="receipt-label">WHO:</span> Priya</div>
-              <div class="receipt-row"><span class="receipt-label">WHAT:</span> Contract Draft</div>
-              <div class="receipt-row"><span class="receipt-label">OPENED:</span> Mar 24</div>
-              <div class="receipt-row"><span class="receipt-label">RESOLVED:</span> Apr 5</div>
-              <div class="receipt-divider"></div>
-              <div class="receipt-big">12</div>
-              <div class="receipt-big-label">DAYS</div>
-              <div class="receipt-divider"></div>
-              <div class="receipt-row"><span class="receipt-label">FOLLOW-UPS:</span> 3</div>
-              <div class="receipt-row receipt-nudge">&rarr; sent reminder</div>
-              <div class="receipt-row receipt-nudge">&rarr; pinged on Slack</div>
-              <div class="receipt-row receipt-nudge">&rarr; called directly</div>
-              <div class="receipt-divider"></div>
-              <div class="receipt-footer">THANK YOU FOR YOUR PATIENCE</div>
-            </div>
-          </div>
-          <div class="killer-text">
-            <h3>The Receipt</h3>
-            <p>Every resolved item gets a receipt. Like a shop receipt, but for accountability. How long did it take? How many nudges? Copy it, share it, screenshot it. The paper trail that tells the whole story.</p>
-          </div>
-        </div>
-
-        <!-- Clipboard Radar -->
-        <div class="killer-card killer-card-reverse">
-          <div class="killer-text">
-            <h3>Clipboard Radar</h3>
-            <p>Copy an email that says "I'll send it by Friday" and the app catches it. A banner slides in: <em>"Detected a wait. Add it?"</em> Pre-filled with the who, what, and deadline. One click to track it. Zero typing.</p>
-          </div>
-          <div class="killer-visual">
-            <div class="radar-mock">
-              <div class="radar-source">
-                <div class="radar-source-label">Copied text</div>
-                <div class="radar-source-text">"Hey, I'll get the contract draft back to you by Friday. &mdash; Priya"</div>
-              </div>
-              <div class="radar-arrow">&darr;</div>
-              <div class="radar-banner">
-                <div class="radar-banner-header">
-                  <span class="radar-icon">&#128203;</span>
-                  <span class="radar-title">Clipboard Radar</span>
-                </div>
-                <div class="radar-detected">Detected a possible wait</div>
-                <div class="radar-fields">
-                  <div class="radar-field"><span>Who:</span> Priya</div>
-                  <div class="radar-field"><span>What:</span> contract draft</div>
-                  <div class="radar-field"><span>Due:</span> Friday</div>
-                </div>
-                <div class="radar-actions">
-                  <span class="radar-btn-add">Add Wait</span>
-                  <span class="radar-btn-dismiss">&times;</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- iCloud Sync -->
-        <div class="killer-card">
-          <div class="killer-visual">
-            <div class="sync-mock">
-              <div class="sync-devices">
-                <div class="sync-device sync-mac">
-                  <div class="sync-device-icon">&#128187;</div>
-                  <div class="sync-device-label">Mac</div>
-                </div>
-                <div class="sync-arrows">
-                  <span class="sync-arrow">&harr;</span>
-                  <div class="sync-cloud">&#9729;</div>
-                  <span class="sync-arrow">&harr;</span>
-                </div>
-                <div class="sync-device sync-phone">
-                  <div class="sync-device-icon">&#128241;</div>
-                  <div class="sync-device-label">iPhone</div>
-                </div>
-              </div>
-              <div class="sync-status">
-                <span class="sync-dot-live"></span>
-                Synced via iCloud
-              </div>
-            </div>
-          </div>
-          <div class="killer-text">
-            <h3>iCloud Sync</h3>
-            <p>Add an item on your Mac, see it on your iPhone. Resolve it on the go, and it's done everywhere. Your data flows through iCloud Drive automatically — no setup, no accounts, no thinking about it.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Apps -->
-  <section class="apps" id="apps">
-    <div class="section-inner">
-      <div class="section-label">Two Ways to Use It</div>
-      <h2>Mac app. <span class="gradient-text">iOS app.</span><br>Same data.</h2>
-      <p class="section-sub">Both apps sync via iCloud Drive. Add on your Mac, resolve on your iPhone. Your data is always up to date.</p>
-
-      <div class="apps-grid">
-        <div class="app-card">
-          <div class="app-badge">macOS</div>
-          <div class="app-preview">
-            <div class="app-mockup-mac">
-              <div class="mac-titlebar">
-                <span class="dot dot-red"></span>
-                <span class="dot dot-yellow"></span>
-                <span class="dot dot-green"></span>
-              </div>
-              <div class="mac-body">
-                <div class="mac-row mac-header-row">
-                  <span>&#128682; The Waiting Room</span>
-                  <span class="mac-status">Waiting on 3 &middot; Blocking 2</span>
-                </div>
-                <div class="mac-panels">
-                  <div class="mac-panel mac-panel-left">
-                    <div class="mac-panel-title mac-left-title">&#10145; I'M WAITING FOR... <span class="mac-count">3</span></div>
-                    <div class="mac-row-item mac-row-selected">&#9654; <span class="mock-dot mock-green"></span> Sherin &middot; Trip &middot; today</div>
-                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-yellow"></span> AWS &middot; Ticket &middot; 5d</div>
-                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-red"></span> Priya &middot; Contract &middot; 12d</div>
-                  </div>
-                  <div class="mac-panel mac-panel-right">
-                    <div class="mac-panel-title mac-right-title">&#11013; WAITING FOR ME... <span class="mac-count">2</span></div>
-                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-green"></span> Shane &middot; Design &middot; today</div>
-                    <div class="mac-row-item">&nbsp;&nbsp;<span class="mock-dot mock-yellow"></span> Client &middot; Proposal &middot; 4d</div>
-                  </div>
-                </div>
-                <div class="mac-toolbar">
-                  <span class="mac-tool-btn">&#10133; Add [A]</span>
-                  <span class="mac-tool-btn">&#9989; Resolve [R]</span>
-                  <span class="mac-tool-btn">&#128276; Nudge [N]</span>
-                  <span class="mac-tool-btn">&#128337; History [H]</span>
-                  <span class="mac-tool-btn">&#127912; Theme [T]</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h3>Mac App</h3>
-          <p>Keyboard shortcuts for everything. Theme picker, smooth animations. Feels right at home on your Mac.</p>
-          <ul class="app-features">
-            <li>Full keyboard shortcuts</li>
-            <li>Clipboard Radar auto-detects follow-ups</li>
-            <li>Signed &amp; notarized — just download and run</li>
-          </ul>
-        </div>
-
-        <div class="app-card">
-          <div class="app-badge app-badge-ios">iOS</div>
-          <div class="app-preview">
-            <div class="ios-mockup">
-              <div class="ios-notch"></div>
-              <div class="ios-body">
-                <div class="ios-header">
-                  <span>&#128682; The Waiting Room</span>
-                  <span class="ios-status-text">All clear!</span>
-                </div>
-                <div class="ios-tabs">
-                  <span class="ios-tab ios-tab-active">&#10145; Waiting For</span>
-                  <span class="ios-tab">&#11013; Waiting On Me</span>
-                </div>
-                <div class="ios-panel">
-                  <div class="ios-panel-title ios-left-title">&#10145; I'M WAITING FOR... <span class="mac-count">3</span></div>
-                  <div class="ios-row ios-row-selected">
-                    <span class="mock-dot mock-green"></span> Sherin &middot; Trip &middot; <span class="mock-age mock-age-green">today</span>
-                  </div>
-                  <div class="ios-row">
-                    <span class="mock-dot mock-yellow"></span> AWS &middot; Ticket &middot; <span class="mock-age mock-age-yellow">5d</span>
-                  </div>
-                  <div class="ios-row">
-                    <span class="mock-dot mock-red"></span> Priya &middot; Contract &middot; <span class="mock-age mock-age-red">12d</span>
-                  </div>
-                </div>
-                <div class="ios-toolbar">
-                  <span class="ios-tool-btn">&#10133; Add</span>
-                  <span class="ios-tool-btn">&#9989; Resolve</span>
-                  <span class="ios-tool-btn">&#128276; Nudge</span>
-                  <span class="ios-tool-btn">&#128337; History</span>
-                  <span class="ios-tool-btn">&#127912; Theme</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h3>iPhone &amp; iPad</h3>
-          <p>Your open loops in your pocket. Swipe to resolve, swipe to nudge. Everything syncs automatically.</p>
-          <ul class="app-features">
-            <li>Swipe to resolve, nudge, or delete</li>
-            <li>Side-by-side panels on iPad</li>
-            <li>Haptic feedback &amp; native share sheets</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Themes -->
-  <section class="themes" id="themes">
-    <div class="section-inner">
-      <div class="section-label">Themes</div>
-      <h2>Pick your <span class="gradient-text">vibe</span></h2>
-      <p class="section-sub">Six carefully crafted themes. Your choice syncs across all your devices.</p>
-
-      <div class="themes-grid">
-        <div class="theme-card theme-dark active" data-theme="dark">
-          <div class="theme-preview">
-            <div class="tp-left" style="background:#1a3a2e;border-color:#66ffaa"></div>
-            <div class="tp-right" style="background:#3a1a2e;border-color:#ff88cc"></div>
-          </div>
-          <span class="theme-name">Dark</span>
-        </div>
-        <div class="theme-card theme-light" data-theme="light">
-          <div class="theme-preview" style="background:#f5f5f8">
-            <div class="tp-left" style="background:#e6f9ed;border-color:#228855"></div>
-            <div class="tp-right" style="background:#f9e6f0;border-color:#cc3388"></div>
-          </div>
-          <span class="theme-name">Light</span>
-        </div>
-        <div class="theme-card theme-sunset" data-theme="sunset">
-          <div class="theme-preview" style="background:#261410">
-            <div class="tp-left" style="background:#402e14;border-color:#ffcc44"></div>
-            <div class="tp-right" style="background:#401a1a;border-color:#ff7777"></div>
-          </div>
-          <span class="theme-name">Sunset</span>
-        </div>
-        <div class="theme-card theme-ocean" data-theme="ocean">
-          <div class="theme-preview" style="background:#0d1520">
-            <div class="tp-left" style="background:#142e40;border-color:#55ddee"></div>
-            <div class="tp-right" style="background:#1e2647;border-color:#99bbff"></div>
-          </div>
-          <span class="theme-name">Ocean</span>
-        </div>
-        <div class="theme-card theme-forest" data-theme="forest">
-          <div class="theme-preview" style="background:#0f1a0f">
-            <div class="tp-left" style="background:#1a381a;border-color:#88ee88"></div>
-            <div class="tp-right" style="background:#332e14;border-color:#eedd66"></div>
-          </div>
-          <span class="theme-name">Forest</span>
-        </div>
-        <div class="theme-card theme-rose" data-theme="rose">
-          <div class="theme-preview" style="background:#1a0f1a">
-            <div class="tp-left" style="background:#381a2e;border-color:#ffaadd"></div>
-            <div class="tp-right" style="background:#2e1a3e;border-color:#cc99ff"></div>
-          </div>
-          <span class="theme-name">Rose</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="how" id="how">
-    <div class="section-inner">
-      <div class="section-label">How It Works</div>
-      <h2>Stupid simple.<br><span class="gradient-text">By design.</span></h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <h3>Add an open loop</h3>
-            <p>Tap + or press <kbd>A</kbd>. Type who and what. Optional: expected date and a note. That's it.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <h3>Watch it age</h3>
-            <p>Green (fresh), yellow (getting old), red (overdue). The color tells you what needs attention before you even read it.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <h3>Nudge or resolve</h3>
-            <p>Followed up? Log it. Done? Resolve it — swipe on iPhone or press <kbd>R</kbd> on Mac. It moves to history with a receipt.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Get Started -->
-  <section class="cta-section" id="get-started">
-    <div class="section-inner">
-      <div class="cta-card">
-        <h2>Get it on<br><span class="gradient-text">every device</span></h2>
-        <p>Download the Mac app or grab it from the App Store on iPhone.</p>
-
-        <div class="download-buttons">
-          <a href="https://github.com/rijo-george/waiting-room/releases/download/v2.1.0/WaitingRoom-1.0.0.dmg" class="download-card">
-            <div class="download-icon">&#128187;</div>
-            <div class="download-info">
-              <div class="download-label">Download for</div>
-              <div class="download-platform">macOS</div>
-            </div>
-            <svg class="download-arrow" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="https://apps.apple.com/app/the-waiting-room/id0000000000" class="download-card">
-            <div class="download-icon">&#128241;</div>
-            <div class="download-info">
-              <div class="download-label">Download on the</div>
-              <div class="download-platform">App Store</div>
-            </div>
-            <svg class="download-arrow" width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Keyboard shortcuts -->
-  <section class="shortcuts">
-    <div class="section-inner">
-      <div class="section-label">Mac Shortcuts</div>
-      <h2>Keyboard lovers, rejoice</h2>
-      <div class="shortcuts-grid">
-        <div class="shortcut"><kbd>A</kbd><span>Add item</span></div>
-        <div class="shortcut"><kbd>R</kbd><span>Resolve</span></div>
-        <div class="shortcut"><kbd>N</kbd><span>Nudge</span></div>
-        <div class="shortcut"><kbd>H</kbd><span>History</span></div>
-        <div class="shortcut"><kbd>T</kbd><span>Theme</span></div>
-        <div class="shortcut"><kbd>S</kbd><span>Switch panel</span></div>
-        <div class="shortcut"><kbd>J</kbd> / <kbd>K</kbd><span>Navigate</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <span class="nav-icon">&#128682;</span>
-        <span>The Waiting Room</span>
-      </div>
-      <div class="footer-right">
-        <a href="https://github.com/rijo-george/waiting-room">GitHub</a>
-        <span>&middot;</span>
-        <span>Mac + iPhone</span>
-        <span>&middot;</span>
-        <span>iCloud sync</span>
-      </div>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>
