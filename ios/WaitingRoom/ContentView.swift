@@ -305,6 +305,7 @@ struct ContentView: View {
             .foregroundColor(tc.textPrimary.opacity(0.7))
             .frame(maxWidth: .infinity)
         }
+        .accessibilityLabel(title)
     }
 
     // MARK: - Actions

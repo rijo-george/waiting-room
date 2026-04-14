@@ -6,6 +6,27 @@ _dmg_staging/
 _dmg_temp.dmg
 AppIcon.iconset/
 
+# Built app bundles (build from source, don't track binaries)
+*.app/
+*.dmg.zip
+
+# Xcode
+*.xcodeproj/
+xcuserdata/
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+.swiftpm/
+Packages/
+Package.resolved
+
 # Python
 __pycache__/
 *.pyc
@@ -17,3 +38,5 @@ build/
 .vscode/
 .idea/
 *.swp
+*.swo
+*~

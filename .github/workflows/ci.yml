@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── macOS: build + test ──────────────────────────────────────────
+  macos:
+    name: macOS — Build & Test
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build (debug)
+        working-directory: macos
+        run: swift build
+
+      - name: Run tests
+        working-directory: macos
+        run: swift test
+
+      - name: Build (release, universal)
+        working-directory: macos
+        run: swift build -c release --arch arm64 --arch x86_64
+
+  # ── iOS: build + test ────────────────────────────────────────────
+  ios:
+    name: iOS — Build & Test
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: ios
+        run: xcodegen generate
+
+      - name: Build
+        working-directory: ios
+        run: |
+          xcodebuild build \
+            -project WaitingRoom.xcodeproj \
+            -scheme WaitingRoom \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Test
+        working-directory: ios
+        run: |
+          xcodebuild test \
+            -project WaitingRoom.xcodeproj \
+            -scheme WaitingRoom \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO

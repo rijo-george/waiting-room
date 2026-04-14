@@ -1,114 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Waiting Room — Track Every Open Loop</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'IBM Plex Mono','Courier New',monospace;background:#f4efe6;color:#4a3f34;min-height:100vh;display:flex;flex-direction:column;align-items:center}
-        body::before{content:'';position:fixed;inset:0;opacity:.035;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:999}
-        .c{max-width:600px;width:100%;padding:0 24px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
-        header{width:100%;display:flex;justify-content:space-between;align-items:center;padding:36px 0 0}
-        .wm{font-family:'Special Elite',monospace;font-size:16px;color:#8a7a68;letter-spacing:2px}
-        header a{font-size:12px;color:#a0937f;text-decoration:none;transition:color .3s}header a:hover{color:#4a3f34}
-        .hero{text-align:center;padding:90px 0 50px}
-        .icon{width:80px;height:80px;margin:0 auto 44px;background:linear-gradient(135deg,#2a1f18,#1a1410);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 40px rgba(40,30,20,.15)}
-        .icon svg{width:32px;height:32px}
-        h1{font-family:'Special Elite',monospace;font-size:clamp(26px,5vw,38px);font-weight:400;color:#1a1a1a;line-height:1.25;margin-bottom:24px}
-        h1 span{color:#c06830}
-        .sub{font-size:14px;line-height:1.8;color:#888;max-width:420px;margin:0 auto 44px}
-        .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-        .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 30px;background:rgba(210,120,60,.08);border:1px solid rgba(210,120,60,.15);border-radius:10px;color:#c06830;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;text-decoration:none;transition:all .3s}
-        .btn:hover{background:rgba(210,120,60,.14);transform:translateY(-1px)}
-        .btn svg{width:15px;height:15px;opacity:.7}
-        .btn.sec{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.06);color:#888}
-        .btn.sec:hover{background:rgba(0,0,0,.06);color:#4a3f34}
-        .meta{margin-top:14px;font-size:11px;color:#aaa}
-        .line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.06),transparent)}
-        /* Mockup — dual panel */
-        .mockup{width:100%;max-width:380px;margin:20px auto 50px}
-        .mock-app{background:#1a1a1a;border-radius:10px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,.15);border:1px solid rgba(0,0,0,.08)}
-        .mock-titlebar{height:28px;background:#0d0d0d;display:flex;align-items:center;padding:0 12px;gap:6px}
-        .mock-titlebar .dot{width:8px;height:8px;border-radius:50%}
-        .mock-titlebar span{flex:1;text-align:center;font-size:10px;color:#555;font-family:'IBM Plex Mono',monospace}
-        .mock-panels{display:grid;grid-template-columns:1fr 1fr;min-height:140px}
-        .mock-left,.mock-right{padding:10px 12px}
-        .mock-left{border-right:1px solid rgba(255,255,255,.04)}
-        .mock-label{font-size:8px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-family:'IBM Plex Mono',monospace}
-        .mock-label.l{color:#d2783c}
-        .mock-label.r{color:#4db8b8}
-        .mock-row{display:flex;align-items:center;gap:5px;padding:4px 0;font-size:9px;font-family:'IBM Plex Mono',monospace;color:#888}
-        .mock-row .d{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-        .mock-row .age{margin-left:auto;font-size:7px;padding:1px 4px;border-radius:3px}
-        .features{width:100%;padding:48px 0;text-align:center}
-        .features h2{font-family:'Special Elite',monospace;font-size:14px;color:#999;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
-        .g{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-        .chip{padding:14px 12px;border-radius:8px;background:rgba(0,0,0,.02);border:1px solid rgba(0,0,0,.04);font-size:11px;color:#888;transition:all .25s}
-        .chip:hover{background:rgba(210,120,60,.06);color:#4a3f34}
-        .chip .e{display:block;font-size:18px;margin-bottom:4px}
-        .about{width:100%;padding:44px 0;text-align:center}
-        .about p{font-size:12px;color:#999;line-height:1.8;max-width:400px;margin:0 auto}
-        footer{width:100%;padding:36px 0;text-align:center}
-        footer p{font-size:11px;color:#bbb}
-        footer a{color:#999;text-decoration:none}footer a:hover{color:#4a3f34}
-        @media(max-width:540px){.hero{padding:60px 0 40px}.g{grid-template-columns:1fr}.btns{flex-direction:column;align-items:center}}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Waiting Room — Track Every Open Loop</title>
+  <meta name="description" content="Two panels. Who owes you. Who you're blocking. Age indicators, nudge tracking, receipts, iCloud sync. Native macOS + iOS.">
+  <meta name="theme-color" content="#c4581a">
+  <meta property="og:title" content="The Waiting Room — Track Every Open Loop">
+  <meta property="og:description" content="Two panels. Who owes you. Who you're blocking. Native macOS + iOS with iCloud sync.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="c">
-        <header><div class="wm">the waiting room</div><a href="https://github.com/rijo-george/waiting-room">github</a></header>
-        <section class="hero">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d2783c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <h1>Track every <span>open loop</span></h1>
-            <p class="sub">Two panels. Who owes you. Who you're blocking. Age indicators. Nudge tracking. Zero things fall through cracks.</p>
-            <div class="btns">
-                <a href="https://github.com/rijo-george/waiting-room/releases/download/v2.1.0/WaitingRoom-1.0.0.dmg" class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download for Mac</a>
-                <a href="https://apps.apple.com/app/the-waiting-room/id0000000000" class="btn sec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>iOS App</a>
-            </div>
-            <p class="meta">macOS 14+ &middot; iOS 17+ &middot; iCloud sync &middot; free</p>
-        </section>
-        <section class="mockup">
-            <div class="mock-app">
-                <div class="mock-titlebar">
-                    <div class="dot" style="background:#ff5f57"></div>
-                    <div class="dot" style="background:#febc2e"></div>
-                    <div class="dot" style="background:#28c840"></div>
-                    <span>The Waiting Room</span>
-                </div>
-                <div class="mock-panels">
-                    <div class="mock-left">
-                        <div class="mock-label l">&#10145; I'm waiting for</div>
-                        <div class="mock-row"><div class="d" style="background:#28c840"></div>Sherin &middot; Trip<span class="age" style="background:rgba(40,200,64,.1);color:#28c840">today</span></div>
-                        <div class="mock-row"><div class="d" style="background:#febc2e"></div>AWS &middot; Ticket<span class="age" style="background:rgba(254,188,46,.1);color:#febc2e">5d</span></div>
-                        <div class="mock-row"><div class="d" style="background:#ff5f57"></div>Priya &middot; Contract<span class="age" style="background:rgba(255,95,87,.1);color:#ff5f57">12d</span></div>
-                    </div>
-                    <div class="mock-right">
-                        <div class="mock-label r">&#11013; Waiting for me</div>
-                        <div class="mock-row"><div class="d" style="background:#28c840"></div>Shane &middot; Ideas<span class="age" style="background:rgba(40,200,64,.1);color:#28c840">today</span></div>
-                        <div class="mock-row"><div class="d" style="background:#febc2e"></div>Alex &middot; Review<span class="age" style="background:rgba(254,188,46,.1);color:#febc2e">3d</span></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <div class="line"></div>
-        <section class="features">
-            <h2>Features</h2>
-            <div class="g">
-                <div class="chip"><span class="e">&#128308;&#128993;&#128994;</span>Age indicators</div>
-                <div class="chip"><span class="e">&#128236;</span>Nudge tracking</div>
-                <div class="chip"><span class="e">&#127384;</span>Shareable receipts</div>
-                <div class="chip"><span class="e">&#128203;</span>Clipboard radar</div>
-                <div class="chip"><span class="e">&#9729;</span>iCloud sync</div>
-                <div class="chip"><span class="e">&#127912;</span>6 themes</div>
-            </div>
-        </section>
-        <div class="line"></div>
-        <section class="about"><p>No accounts. No tracking. Data syncs through your own iCloud. macOS + iOS.</p></section>
-        <div class="line"></div>
-        <footer><p>made by <a href="https://github.com/rijo-george">rijo</a> &middot; <a href="https://github.com/rijo-george/waiting-room">github</a> &middot; 2026</p></footer>
+
+<!-- ── Nav ──────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="nav-icon">🚪</span> The Waiting Room
     </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#apps">Apps</a>
+      <a href="#themes">Themes</a>
+      <a href="https://github.com/rijo-george/waiting-room">GitHub</a>
+      <a href="#download" class="nav-cta">Download</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">macOS + iOS · iCloud Sync · Free &amp; Open Source</div>
+    <h1>Track every <span class="gradient-text">open loop</span></h1>
+    <p class="hero-sub">Two panels. Who owes you. Who you're blocking. Age indicators, nudge tracking, and shareable receipts. Zero things fall through cracks.</p>
+    <div class="hero-actions">
+      <a href="https://github.com/rijo-george/waiting-room/releases/latest" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download for Mac
+      </a>
+      <a href="https://github.com/rijo-george/waiting-room" class="btn btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        View Source
+      </a>
+    </div>
+
+    <!-- Hero Mockup -->
+    <div class="hero-visual">
+      <div class="mockup">
+        <div class="mockup-bar">
+          <div class="mockup-dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <span class="mockup-title">The Waiting Room</span>
+        </div>
+        <div class="mockup-body">
+          <!-- Left panel -->
+          <div class="mock-panel">
+            <div class="mock-panel-header mock-left-header">→ I'M WAITING FOR...</div>
+            <div class="mock-item mock-selected">
+              <div class="mock-dot mock-green"></div>
+              <span>Sherin · Trip plans</span>
+              <span class="mock-age mock-age-green" style="margin-left:auto">today</span>
+            </div>
+            <div class="mock-item">
+              <div class="mock-dot mock-yellow"></div>
+              <span>AWS · Support ticket</span>
+              <span class="mock-age mock-age-yellow" style="margin-left:auto">5d</span>
+            </div>
+            <div class="mock-item">
+              <div class="mock-dot mock-red"></div>
+              <span>Priya · Contract</span>
+              <span class="mock-age mock-age-red" style="margin-left:auto">12d</span>
+            </div>
+          </div>
+          <!-- Right panel -->
+          <div class="mock-panel">
+            <div class="mock-panel-header mock-right-header">← WAITING FOR ME...</div>
+            <div class="mock-item">
+              <div class="mock-dot mock-green"></div>
+              <span>Shane · Ideas doc</span>
+              <span class="mock-age mock-age-green" style="margin-left:auto">today</span>
+            </div>
+            <div class="mock-item">
+              <div class="mock-dot mock-yellow"></div>
+              <span>Alex · Code review</span>
+              <span class="mock-age mock-age-yellow" style="margin-left:auto">3d</span>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-status">Waiting on 3 · Blocking 2 · Oldest: 12d · 8 resolved</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Killer Features ──────────────────────────────────────────── -->
+<section class="killer" id="killer">
+  <div class="section-inner">
+    <div class="section-label">Killer Features</div>
+    <h2>Not just a list.<br>An <span class="gradient-text">accountability engine</span>.</h2>
+
+    <div class="killer-grid">
+      <!-- The Receipt -->
+      <div class="killer-card">
+        <div class="killer-text">
+          <h3>The Receipt</h3>
+          <p>Every resolved item gets a receipt — like a <em>shop receipt for accountability</em>. Who, what, how long, how many follow-ups. Copy it, share it, send it to the person who made you wait 14 days.</p>
+        </div>
+        <div class="receipt-mock">
+          <div class="receipt-header">THE WAITING ROOM</div>
+          <div class="receipt-sub">- RESOLVED -</div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-row"><span class="receipt-label">WHO </span> Priya</div>
+          <div class="receipt-row"><span class="receipt-label">WHAT </span> Signed contract</div>
+          <div class="receipt-row"><span class="receipt-label">OPENED </span> Mar 1</div>
+          <div class="receipt-row"><span class="receipt-label">RESOLVED </span> Mar 15</div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-big">14</div>
+          <div class="receipt-big-label">DAYS</div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-nudge">→ sent follow-up email</div>
+          <div class="receipt-nudge">→ called, left voicemail</div>
+          <div class="receipt-nudge">→ pinged on Slack</div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-footer">THANK YOU FOR YOUR PATIENCE</div>
+        </div>
+      </div>
+
+      <!-- Clipboard Radar -->
+      <div class="killer-card killer-card-reverse">
+        <div class="killer-text">
+          <h3>Clipboard Radar</h3>
+          <p>Copy an email that says <em>"I'll send it by Friday"</em> — the app detects it, extracts the name and deadline, and offers to create a wait item. Zero typing. NLP-powered.</p>
+        </div>
+        <div class="radar-mock">
+          <div class="radar-source">
+            <div class="radar-source-label">📋 Copied text</div>
+            <div class="radar-source-text">"I'll get the contract signed and send it back by April 10" — Priya</div>
+          </div>
+          <div class="radar-arrow">↓</div>
+          <div class="radar-banner">
+            <div class="radar-banner-header">
+              <span class="radar-icon">📋</span>
+              <span class="radar-title">Clipboard Radar</span>
+            </div>
+            <div class="radar-detected">Detected a commitment:</div>
+            <div class="radar-fields">
+              <div class="radar-field"><span>WHO:</span> Priya</div>
+              <div class="radar-field"><span>WHAT:</span> I'll get the contract signed...</div>
+              <div class="radar-field"><span>BY:</span> April 10</div>
+            </div>
+            <div class="radar-actions">
+              <span class="radar-btn-dismiss">✕</span>
+              <span class="radar-btn-add">Add Wait</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- iCloud Sync -->
+      <div class="killer-card">
+        <div class="killer-text">
+          <h3>iCloud Sync</h3>
+          <p>Add an item on your Mac, see it on your iPhone. Resolve it on your phone, see it on your Mac. <em>Same data, zero config.</em> File coordination prevents conflicts. Works offline.</p>
+        </div>
+        <div class="sync-mock">
+          <div class="sync-devices">
+            <div class="sync-device">
+              <div class="sync-device-icon">🖥</div>
+              <div class="sync-device-label">macOS</div>
+            </div>
+            <div class="sync-arrows">
+              <span class="sync-arrow">⇄</span>
+              <span class="sync-cloud">☁</span>
+            </div>
+            <div class="sync-device">
+              <div class="sync-device-icon">📱</div>
+              <div class="sync-device-label">iOS</div>
+            </div>
+          </div>
+          <div class="sync-status">
+            <div class="sync-dot-live"></div>
+            Synced via your iCloud
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ─────────────────────────────────────────────────── -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div class="section-label">Features</div>
+    <h2>Everything you need.<br>Nothing you don't.</h2>
+    <p class="section-sub">No accounts. No tracking. No subscriptions. Just a clean tool that does one thing extremely well.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🟢🟡🔴</div>
+        <h3>Age Indicators</h3>
+        <p>Green for fresh, yellow for aging, red for overdue. See the health of every open loop at a glance.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Nudge Tracking</h3>
+        <p>Log every follow-up with timestamps. When they say "I never got your email," you have the receipts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧾</div>
+        <h3>Shareable Receipts</h3>
+        <p>Every resolved item generates a receipt with the full timeline. Copy or share — it's your accountability record.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Clipboard Radar</h3>
+        <p>NLP-powered detection of commitments in copied text. Extracts who, what, and when — zero typing required.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☁️</div>
+        <h3>iCloud Sync</h3>
+        <p>Seamless cross-device sync via your own iCloud. No servers, no accounts. File coordination prevents data loss.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>6 Themes</h3>
+        <p>Dark, Light, Sunset, Ocean, Forest, Rose. Synced across all your devices via the shared config.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Apps ──────────────────────────────────────────────────────── -->
+<section class="apps" id="apps">
+  <div class="section-inner">
+    <div class="section-label">Native Apps</div>
+    <h2>Built for Mac and iPhone.</h2>
+    <p class="section-sub">Pure SwiftUI. No Electron, no web views. Feels native because it is native.</p>
+
+    <div class="apps-grid">
+      <!-- macOS card -->
+      <div class="app-card">
+        <span class="app-badge">macOS</span>
+        <div class="app-preview">
+          <div class="app-mockup-mac">
+            <div class="mac-titlebar">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+            </div>
+            <div class="mac-body">
+              <div class="mac-row mac-header-row">
+                <span>🚪 The Waiting Room</span>
+                <span class="mac-status">Waiting on 3 · Blocking 2</span>
+              </div>
+              <div class="mac-panels">
+                <div class="mac-panel">
+                  <div class="mac-panel-title mac-left-title">→ I'M WAITING FOR... <span class="mac-count">3</span></div>
+                  <div class="mac-row-item mac-row-selected">▸ 🟢 Sherin · Trip plans · today</div>
+                  <div class="mac-row-item">🟡 AWS · Support ticket · 5d</div>
+                  <div class="mac-row-item">🔴 Priya · Contract · 12d</div>
+                </div>
+                <div class="mac-panel">
+                  <div class="mac-panel-title mac-right-title">← WAITING FOR ME... <span class="mac-count">2</span></div>
+                  <div class="mac-row-item">🟢 Shane · Ideas doc · today</div>
+                  <div class="mac-row-item">🟡 Alex · Code review · 3d</div>
+                </div>
+              </div>
+              <div class="mac-toolbar">
+                <span class="mac-tool-btn">Add [A]</span>
+                <span class="mac-tool-btn">Resolve [R]</span>
+                <span class="mac-tool-btn">Nudge [N]</span>
+                <span class="mac-tool-btn">History [H]</span>
+                <span class="mac-tool-btn">Theme [T]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>macOS</h3>
+        <p>Full keyboard-driven workflow. Universal binary — Apple Silicon and Intel.</p>
+        <ul class="app-features">
+          <li>Keyboard shortcuts for everything (A/R/N/H/T + vim keys)</li>
+          <li>Clipboard Radar with NLP name extraction</li>
+          <li>Signed and notarized — opens without warnings</li>
+          <li>Requires macOS 14 (Sonoma) or later</li>
+        </ul>
+      </div>
+
+      <!-- iOS card -->
+      <div class="app-card">
+        <span class="app-badge app-badge-ios">iOS</span>
+        <div class="app-preview">
+          <div class="ios-mockup">
+            <div class="ios-notch"></div>
+            <div class="ios-body">
+              <div class="ios-header">
+                <span>🚪 The Waiting Room</span>
+                <span class="ios-status-text">Waiting on 3</span>
+              </div>
+              <div class="ios-tabs">
+                <div class="ios-tab ios-tab-active">→ Waiting For (3)</div>
+                <div class="ios-tab">← Waiting On Me (2)</div>
+              </div>
+              <div class="ios-panel">
+                <div class="ios-panel-title ios-left-title">→ I'M WAITING FOR... <span class="mac-count">3</span></div>
+                <div class="ios-row ios-row-selected">
+                  <div class="mock-dot mock-green"></div>
+                  Sherin · Trip plans · today ›
+                </div>
+                <div class="ios-row">
+                  <div class="mock-dot mock-yellow"></div>
+                  AWS · Support ticket · 5d
+                </div>
+                <div class="ios-row">
+                  <div class="mock-dot mock-red"></div>
+                  Priya · Contract · 12d
+                </div>
+              </div>
+              <div class="ios-toolbar">
+                <span class="ios-tool-btn">＋ Add</span>
+                <span class="ios-tool-btn">✓ Resolve</span>
+                <span class="ios-tool-btn">🔔 Nudge</span>
+                <span class="ios-tool-btn">⏱ History</span>
+                <span class="ios-tool-btn">🎨 Theme</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>iOS</h3>
+        <p>Side-by-side on iPad, segmented control on iPhone. Swipe gestures for everything.</p>
+        <ul class="app-features">
+          <li>Swipe right to resolve, swipe left to nudge</li>
+          <li>Haptic feedback on actions</li>
+          <li>Native share sheet for receipts</li>
+          <li>Requires iOS 17 or later</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Themes ────────────────────────────────────────────────────── -->
+<section class="themes" id="themes">
+  <div class="section-inner">
+    <div class="section-label">Themes</div>
+    <h2>Six themes. Synced everywhere.</h2>
+    <p class="section-sub">Pick a theme on your Mac, it shows up on your iPhone. Press <kbd>T</kbd> on macOS or tap the palette icon on iOS.</p>
+
+    <div class="themes-grid">
+      <div class="theme-card active">
+        <div class="theme-preview" style="background:#1c1b2e">
+          <div class="tp-left" style="background:#1a3228;border-color:#66ffab"></div>
+          <div class="tp-right" style="background:#321a28;border-color:#ff87cc"></div>
+        </div>
+        <div class="theme-name">Dark</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#f5f5f8">
+          <div class="tp-left" style="background:#e6faed;border-color:#228c55"></div>
+          <div class="tp-right" style="background:#fae6f0;border-color:#bf3380"></div>
+        </div>
+        <div class="theme-name">Light</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#261a1a">
+          <div class="tp-left" style="background:#402e14;border-color:#ffc04d"></div>
+          <div class="tp-right" style="background:#401a1a;border-color:#ff7373"></div>
+        </div>
+        <div class="theme-name">Sunset</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#141e2e">
+          <div class="tp-left" style="background:#142e40;border-color:#4dd9f2"></div>
+          <div class="tp-right" style="background:#1e2647;border-color:#99bfff"></div>
+        </div>
+        <div class="theme-name">Ocean</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#1a241a">
+          <div class="tp-left" style="background:#1a381a;border-color:#8cf28c"></div>
+          <div class="tp-right" style="background:#332e14;border-color:#e6cc80"></div>
+        </div>
+        <div class="theme-name">Forest</div>
+      </div>
+      <div class="theme-card">
+        <div class="theme-preview" style="background:#241a24">
+          <div class="tp-left" style="background:#381a2e;border-color:#ffa6d9"></div>
+          <div class="tp-right" style="background:#2e1a3d;border-color:#cc99ff"></div>
+        </div>
+        <div class="theme-name">Rose</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ──────────────────────────────────────────────── -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="section-label">How It Works</div>
+    <h2>Simple by design.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Add an item</h3>
+          <p>Press <kbd>A</kbd> (or tap +). Enter who, what, and optionally when you expect it. Pick your direction — are you waiting, or are they?</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Watch it age</h3>
+          <p>Items turn green → yellow → red as time passes. At a glance, you know what's overdue. No calendar needed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Nudge when needed</h3>
+          <p>Press <kbd>N</kbd> to log a follow-up with a note. "Sent reminder email." "Called, left voicemail." Build the paper trail.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Resolve and get a receipt</h3>
+          <p>Press <kbd>R</kbd> to mark it done. You get a receipt — who, what, how long, how many nudges. Copy it, share it, archive it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Keyboard Shortcuts ────────────────────────────────────────── -->
+<section class="shortcuts" id="shortcuts">
+  <div class="section-inner">
+    <div class="section-label">Keyboard Shortcuts</div>
+    <h2>Full vim-style navigation on macOS.</h2>
+
+    <div class="shortcuts-grid">
+      <div class="shortcut"><kbd>A</kbd> <span>Add item</span></div>
+      <div class="shortcut"><kbd>R</kbd> <span>Resolve</span></div>
+      <div class="shortcut"><kbd>N</kbd> <span>Nudge</span></div>
+      <div class="shortcut"><kbd>H</kbd> <span>History</span></div>
+      <div class="shortcut"><kbd>T</kbd> <span>Theme</span></div>
+      <div class="shortcut"><kbd>S</kbd> / <kbd>Tab</kbd> <span>Switch panel</span></div>
+      <div class="shortcut"><kbd>J</kbd> / <kbd>K</kbd> <span>Navigate</span></div>
+      <div class="shortcut"><kbd>←</kbd> / <kbd>→</kbd> <span>Switch panel</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA / Download ────────────────────────────────────────────── -->
+<section class="cta-section" id="download">
+  <div class="section-inner">
+    <div class="cta-card">
+      <h2>Stop losing track.</h2>
+      <p>Download The Waiting Room — free, open source, and built for people who follow up.</p>
+
+      <div class="download-buttons">
+        <a href="https://github.com/rijo-george/waiting-room/releases/latest" class="download-card">
+          <span class="download-icon">🖥</span>
+          <div>
+            <div class="download-label">Download for</div>
+            <div class="download-platform">macOS</div>
+          </div>
+          <span class="download-arrow">→</span>
+        </a>
+        <a href="https://github.com/rijo-george/waiting-room/releases/latest" class="download-card">
+          <span class="download-icon">📱</span>
+          <div>
+            <div class="download-label">Coming soon on</div>
+            <div class="download-platform">iOS</div>
+          </div>
+          <span class="download-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="data-note">
+        🔒 No accounts. No tracking. Your data syncs through your own iCloud.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-left">🚪 The Waiting Room</div>
+    <div class="footer-right">
+      <a href="https://github.com/rijo-george/waiting-room">GitHub</a>
+      <span>·</span>
+      <a href="https://github.com/rijo-george">@rijo</a>
+      <span>·</span>
+      <span>MIT License</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>

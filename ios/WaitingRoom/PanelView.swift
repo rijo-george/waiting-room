@@ -136,9 +136,11 @@ struct ItemRow: View {
             // Age indicator dot
             let days = item.ageDays
             let color = ageColor(days: days, forLightBg: isLightTheme)
+            let ageLabel = days < 3 ? "fresh" : days < 7 ? "aging" : "overdue"
             Circle()
                 .fill(Color(red: color.r, green: color.g, blue: color.b))
                 .frame(width: 10, height: 10)
+                .accessibilityLabel("\(ageLabel) indicator")
 
             // Main content
             VStack(alignment: .leading, spacing: 3) {
@@ -197,5 +199,7 @@ struct ItemRow: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(isSelected ? tc.accent.opacity(0.4) : Color.clear, lineWidth: 1)
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(item.who), \(item.what), \(days > 0 ? "\(days) days" : "today")\(item.nudges.isEmpty ? "" : ", \(item.nudges.count) nudge\(item.nudges.count == 1 ? "" : "s")")")
     }
 }

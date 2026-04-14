@@ -105,13 +105,21 @@ class WaitingRoomStore: ObservableObject {
     }
 
     private static func dataEqual(_ a: WaitingData, _ b: WaitingData) -> Bool {
-        let ids = { (d: WaitingData) in
-            Set(d.waiting_for.map(\.id) + d.waiting_on_me.map(\.id) + d.history.map(\.id))
+        let fingerprint = { (d: WaitingData) -> String in
+            let items = d.waiting_for + d.waiting_on_me + d.history
+            return items.map { "\($0.id):\($0.nudges.count):\($0.resolved_at ?? "")" }
+                .sorted()
+                .joined(separator: "|")
         }
-        return ids(a) == ids(b)
+        return fingerprint(a) == fingerprint(b)
     }
 
     // MARK: - Merge logic (union by item ID)
+
+    /// Exposed for testing. Merges two WaitingData sets by union of item IDs.
+    static func testMerge(local: WaitingData, remote: WaitingData) -> WaitingData {
+        merge(local: local, remote: remote)
+    }
 
     private static func merge(local: WaitingData, remote: WaitingData) -> WaitingData {
         // Merge history first — union of all resolved items
@@ -131,7 +139,16 @@ class WaitingRoomStore: ObservableObject {
     private static func mergeItems(local: [WaitingItem], remote: [WaitingItem]) -> [WaitingItem] {
         var byID: [String: WaitingItem] = [:]
         for item in remote { byID[item.id] = item }
-        for item in local { byID[item.id] = item }
+        for item in local {
+            if let existing = byID[item.id] {
+                // Keep whichever version has more data (more nudges, or resolved status)
+                if item.nudges.count >= existing.nudges.count || item.resolved_at != nil {
+                    byID[item.id] = item
+                }
+            } else {
+                byID[item.id] = item
+            }
+        }
         var result: [WaitingItem] = []
         var seen = Set<String>()
         for item in local {

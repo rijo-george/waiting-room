@@ -41,3 +41,16 @@ targets:
           - CloudDocuments
         com.apple.developer.ubiquity-container-identifiers:
           - iCloud.com.rijo.waitingroom
+
+  WaitingRoomTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: WaitingRoomTests
+    dependencies:
+      - target: WaitingRoom
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rijo.waitingroom.tests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/The Waiting Room.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/The Waiting Room"
+        BUNDLE_LOADER: "$(TEST_HOST)"

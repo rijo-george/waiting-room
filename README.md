@@ -8,9 +8,9 @@ Track every open loop in both directions — who owes you, and who you're blocki
 
 ## Download
 
-**[Download for Mac](https://github.com/rijo-george/waiting-room/releases/download/v2.1.0/WaitingRoom-1.0.0.dmg)** — Universal binary, signed & notarized. Works on Apple Silicon and Intel.
+**[Download for Mac](https://github.com/rijo-george/waiting-room/releases/latest)** — Universal binary, signed & notarized. Works on Apple Silicon and Intel.
 
-**[Get on the App Store (iOS)](https://apps.apple.com/app/the-waiting-room/id0000000000)** — iPhone & iPad.
+**iOS** — Coming soon to the App Store. Build from source today (see below).
 
 ## Features
 
@@ -36,12 +36,14 @@ Copy an email that says "I'll send it by Friday" — the app detects it and offe
 - Built with SwiftUI
 - Full keyboard shortcuts (A/R/N/H/T + vim keys)
 - Clipboard Radar with NLP name extraction
+- Requires macOS 14 (Sonoma) or later
 
 ### iOS
 - Built with SwiftUI for iPhone & iPad
 - Side-by-side panels on iPad, segmented control on iPhone
 - Swipe to resolve, swipe to nudge
 - Haptic feedback, native share sheet for receipts
+- Requires iOS 17 or later
 
 ## Keyboard Shortcuts (macOS)
 
@@ -54,26 +56,35 @@ Copy an email that says "I'll send it by Friday" — the app detects it and offe
 | `T` | Theme picker |
 | `S` / `Tab` | Switch panel |
 | `J` / `K` | Navigate up/down |
+| `←` / `→` | Switch panel |
 
 ## Data Storage
 
-Both apps read/write the same files via iCloud Drive:
+Both apps read/write the same files via iCloud Drive using a shared ubiquity container:
 
 ```
-~/Library/Mobile Documents/com~apple~CloudDocs/WaitingRoom/
+~/Library/Mobile Documents/iCloud~com~rijo~waitingroom/Documents/
 ├── data.json      ← items, history, nudges
 └── config.json    ← theme preference
 ```
 
 If iCloud Drive is not available, data falls back to `~/.waiting-room/` on Mac or the app's Documents directory on iOS.
 
+**Sync behavior:**
+- Changes are written with `NSFileCoordinator` to prevent concurrent write corruption
+- On load, local and remote data are merged by union of item IDs
+- Items that appear in history (resolved) are automatically removed from active lists
+- File system events and `NSMetadataQuery` trigger automatic reloads
+
 ## Building from Source
 
 **macOS app:**
 ```bash
 cd macos
-bash build-app.sh        # Build + sign
-bash build-dmg.sh        # Build + sign + notarize DMG
+swift build              # Debug build
+swift test               # Run tests
+bash build-app.sh        # Release build + sign
+bash build-dmg.sh        # Release build + sign + notarize DMG
 ```
 Requires Swift 5.9+ and macOS 14+.
 
@@ -85,6 +96,37 @@ xcodegen generate        # Generate Xcode project
 open WaitingRoom.xcodeproj
 ```
 Set your development team in Xcode, then build and run. Requires Xcode 16+ and iOS 17+.
+
+**Running tests:**
+```bash
+# macOS
+cd macos && swift test
+
+# iOS (via Xcode)
+cd ios && xcodegen generate
+xcodebuild test -project WaitingRoom.xcodeproj -scheme WaitingRoom -destination 'platform=iOS Simulator,name=iPhone 16'
+```
+
+## Architecture
+
+```
+waiting-room/
+├── macos/                 # macOS app (Swift Package)
+│   ├── Sources/           # App source files
+│   ├── Tests/             # Unit tests
+│   ├── Package.swift      # SPM manifest
+│   └── build-*.sh         # Build & distribution scripts
+├── ios/                   # iOS app (xcodegen)
+│   ├── WaitingRoom/       # App source files
+│   ├── WaitingRoomTests/  # Unit tests
+│   └── project.yml        # xcodegen config
+└── docs/                  # Marketing website (GitHub Pages)
+    ├── index.html
+    ├── style.css
+    └── script.js
+```
+
+Both apps share the same data model (`WaitingItem`, `Nudge`, `WaitingData`) and storage format. The data layer is intentionally duplicated rather than shared via a Swift package, because the storage resolution logic differs between platforms (iCloud ubiquity container API on iOS vs. direct filesystem path on macOS).
 
 ## License
 
